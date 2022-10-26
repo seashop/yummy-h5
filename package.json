@@ -10,6 +10,7 @@
     "pretty": "./node_modules/.bin/pretty-quick --staged"
   },
   "dependencies": {
+    "antd-mobile": "^5.24.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
