@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { DEV, DEBUG } = process.env;
 process.env.BABEL_ENV = DEV ? "development" : "production";
 process.env.NODE_ENV = DEV ? "development" : "production";
@@ -15,12 +15,14 @@ module.exports = {
     filename: DEV ? "js/[name].[hash:8].js" : "js/[name].[contenthash:8].js",
   },
   mode: DEV ? "development" : "production",
-  devtool: DEV && "source-map",
+  devtool: "inline-source-map",
   devServer: {
     port: 8080,
+    open: false,
+    historyApiFallback: true,
   },
   optimization: {
-		usedExports: DEV ? true : false,
+    usedExports: DEV ? true : false,
     minimizer: [
       new TerserPlugin({
         parallel: false,
@@ -41,7 +43,7 @@ module.exports = {
     },
   },
   resolve: {
-    extensions: [".js"],
+    extensions: [".js", ".jsx"],
   },
   module: {
     rules: [
@@ -55,9 +57,12 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(less|css)$/,
+        test: /\.(less)$/,
         exclude: /\.module\.less$/,
         use: [
+          {
+            loader: "style-loader",
+          },
           {
             loader: "css-loader",
             options: {
@@ -75,10 +80,11 @@ module.exports = {
       },
       {
         test: /\.(sass|scss)$/,
+        include: path.resolve(__dirname, "src"),
         use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-					},
+          {
+            loader: "style-loader",
+          },
           {
             loader: "css-loader",
             options: {
@@ -103,7 +109,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "/public/index.html"),
+      publicPath: "/",
     }),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
   ],
 };
