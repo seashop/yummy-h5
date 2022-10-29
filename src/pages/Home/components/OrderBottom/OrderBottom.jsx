@@ -21,7 +21,7 @@ const Bottom = (props) => {
   }, 0);
   const [loading, setLoading] = useState(false);
   const handleClick = async () => {
-    if (orderList.length > 0) {
+    if (orderList.length === 0) {
       return Toast.show({
         content: "请添加餐品",
         icon: "fail",
