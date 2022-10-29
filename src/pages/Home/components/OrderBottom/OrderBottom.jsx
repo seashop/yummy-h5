@@ -86,7 +86,7 @@ const Bottom = (props) => {
           onClick={handleShowOrderList}
         />
       </Badge>
-      <div className="totalPrice">菜品总价: ${totalPrice.toFixed(2)}</div>
+      <div className="totalPrice">Price: ${totalPrice.toFixed(2)}</div>
       <Button
         loading={loading}
         color="primary"
@@ -95,7 +95,7 @@ const Bottom = (props) => {
         loadingText=""
         onClick={handleClick}
       >
-        下单
+        Order Now
       </Button>
       <Popup
         visible={visible}

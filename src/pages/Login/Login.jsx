@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tabs, Input, Button, Toast } from "antd-mobile";
 import "./login.scss";
 import { useNavigate } from "react-router";
-import { getUrlParams } from "../../utils";
+import { getUrlParams, checkEmail, checkPhone } from "../../utils";
 
 const Login = () => {
   const nav = useNavigate();
@@ -14,7 +14,7 @@ const Login = () => {
   }, []);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [tabKey, setTabKey] = useState("Phone");
+  const [tabKey, setTabKey] = useState("Email");
   const handlePhoneChange = (val) => {
     setPhone(val);
   };
@@ -33,12 +33,26 @@ const Login = () => {
           icon: "fail",
         });
       }
+      if (!checkPhone(phone)) {
+        return Toast.show({
+          duration: 3000,
+          content: "Please Input The Correct Phone",
+          icon: "fail",
+        });
+      }
       sessionStorage.setItem("username", phone);
     } else {
       if (!email) {
         return Toast.show({
           duration: 3000,
           content: "Please Input Email",
+          icon: "fail",
+        });
+      }
+      if (!checkEmail(email)) {
+        return Toast.show({
+          duration: 3000,
+          content: "Please Input The Correct Email",
           icon: "fail",
         });
       }
@@ -50,6 +64,14 @@ const Login = () => {
     <div className="login">
       <div className="title">Welcome to yummy</div>
       <Tabs className="tabs" onChange={handleTabsChange}>
+        <Tabs.Tab title="Email" key="Email">
+          <Input
+            placeholder="Please Input Email"
+            type="email"
+            className="loginInput"
+            onChange={handleEmailChange}
+          />
+        </Tabs.Tab>
         <Tabs.Tab title="Phone" key="Phone">
           <Input
             placeholder="Please Input Phone"
@@ -57,14 +79,6 @@ const Login = () => {
             max="13"
             className="loginInput"
             onChange={handlePhoneChange}
-          />
-        </Tabs.Tab>
-        <Tabs.Tab title="Email" key="Email">
-          <Input
-            placeholder="Please Input Email"
-            type="email"
-            className="loginInput"
-            onChange={handleEmailChange}
           />
         </Tabs.Tab>
       </Tabs>
