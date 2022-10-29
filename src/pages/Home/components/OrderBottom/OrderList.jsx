@@ -14,9 +14,9 @@ const OrderList = (props) => {
   return (
     <div className="orderList">
       <div className="top">
-        <div>已选商品</div>
+        <div>Cart</div>
         <div className="emptyBtn" onClick={handleEmpty}>
-          <img src={EmptyImg} className="icon" /> 清空购物车
+          <img src={EmptyImg} className="icon" /> Empty Cart
         </div>
       </div>
       <div

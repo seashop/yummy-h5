@@ -10,18 +10,13 @@ const Result = () => {
     return (
       <ResultPage
         status="success"
-        title={`下单成功，订单尾号是: ${sn.slice(-4)}`}
-        description="请凭订单后四位取餐"
+        title={`Order Success, Order Num: 
+        ${sn.slice(-4)}`}
+        description=""
       />
     );
   }
-  return (
-    <ResultPage
-      status="error"
-      title="下单失败"
-      description="请检查网络或重新尝试"
-    />
-  );
+  return <ResultPage status="error" title="Order Failed" description="" />;
 };
 
 export default Result;
