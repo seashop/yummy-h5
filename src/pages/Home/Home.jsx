@@ -1,36 +1,35 @@
-import React from "react";
-import { SideBar, Badge } from "antd-mobile";
+import React, { useState } from "react";
+import Category from "./components/Category/Category";
 import OrderBottom from "./components/OrderBottom/OrderBottom";
 import "./home.scss";
 
-const tabs = [
-  {
-    key: "key1",
-    title: "选项一",
-    badge: Badge.dot,
-  },
-  {
-    key: "key2",
-    title: "选项二",
-    badge: "5",
-  },
-  {
-    key: "key3",
-    title: "选项三",
-    badge: "99+",
-    disabled: true,
-  },
-];
-
 const Home = () => {
+  const [orderList, setOrderList] = useState([]);
+  const handleOrderList = (product, count) => {
+    if (product === null && count === 0) {
+      return setOrderList([]);
+    }
+    console.log("handleOrderList--->", product, count);
+    const currentGoodsId = product.goods_id;
+    product.count = count;
+    if (
+      orderList.filter((item) => item.goods_id === currentGoodsId).length === 0
+    ) {
+      orderList.push(product);
+    }
+    orderList.forEach((item) => {
+      if (item.goods_id === currentGoodsId) {
+        item.count = count;
+      }
+    });
+    const temp = orderList.filter((item) => item.count > 0);
+    setOrderList([...temp]);
+  };
+
   return (
     <div className="home">
-      <SideBar>
-        {tabs.map((item) => (
-          <SideBar.Item key={item.key} title={item.title} badge={item.badge} />
-        ))}
-      </SideBar>
-      <OrderBottom />
+      <Category updateOrderList={handleOrderList} />
+      <OrderBottom orderList={orderList} />
     </div>
   );
 };

@@ -4,5 +4,104 @@
   left: 0;
   width: 100%;
   height: 50px;
-  background-color: #25b877;
+  background-color: white;
+  border-top: 1px solid #666;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1001;
+  .cartImg {
+    display: block;
+    margin-left: 10px;
+    height: 30px;
+  }
+  .totalPrice {
+    font-size: 18px;
+    text-align: left;
+    flex: 1;
+    margin-left: 20px;
+    color: #333;
+  }
+  .orderBtn {
+    height: 50px;
+    width: 35%;
+    color: white;
+    background-color: #25b877;
+    font-size: 24px;
+    letter-spacing: 10px;
+  }
+}
+.orderList {
+  width: 100%;
+  .top {
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+    border-bottom: 1px solid #aaa;
+    .emptyBtn {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  .item {
+    width: calc(100% - 10px);
+    margin: 0 auto;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #aaa;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    .img {
+      width: 80px;
+      height: 80px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .detail {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      .title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        height: 40px;
+        line-height: 20px;
+      }
+      .price {
+        display: flex;
+        align-items: center;
+        .discountPrice {
+          font-size: 18px;
+          color: red;
+        }
+        .normalPrice {
+          font-size: 14px;
+          color: #999;
+          text-decoration: line-through;
+        }
+      }
+      .handleBtn {
+        align-self: flex-end;
+      }
+    }
+  }
 }

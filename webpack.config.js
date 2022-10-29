@@ -15,11 +15,18 @@ module.exports = {
     filename: DEV ? "js/[name].[hash:8].js" : "js/[name].[contenthash:8].js",
   },
   mode: DEV ? "development" : "production",
-  devtool: "inline-source-map",
+  devtool: "source-map",
   devServer: {
     port: 8080,
     open: false,
     historyApiFallback: true,
+    proxy: {
+      "/api": {
+        target: "https://sea.fly.dev",
+        pathRewrite: { "^/api/c74": "/c74" },
+        changeOrigin: true,
+      },
+    },
   },
   optimization: {
     usedExports: DEV ? true : false,
@@ -44,6 +51,9 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
+    alias: {
+      "@img": path.resolve(__dirname, "assets/img"),
+    },
   },
   module: {
     rules: [
