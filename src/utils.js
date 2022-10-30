@@ -25,5 +25,5 @@ export const checkEmail = (email) => {
 
 export const checkPhone = (phone) => {
   if (String(phone) === "") return false;
-  return /^(0065)\d{8}$/.test(String(phone));
+  return /\d{8}$/.test(String(phone));
 };

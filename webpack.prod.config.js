@@ -12,25 +12,12 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "js/[name].[hash:8].js",
+    filename: "js/[name].[contenthash:8].js",
   },
-  mode: "development",
-  devtool: "inline-source-map",
-  devServer: {
-    port: 8080,
-    open: false,
-    hot: true,
-    historyApiFallback: true,
-    proxy: {
-      "/api": {
-        target: "https://sea.fly.dev",
-        pathRewrite: { "^/api/c74": "/c74" },
-        changeOrigin: true,
-      },
-    },
-  },
+  mode: "production",
+  devtool: "source-map",
   optimization: {
-    usedExports: true,
+    usedExports: false,
     minimizer: [
       new TerserPlugin({
         parallel: false,
@@ -42,7 +29,7 @@ module.exports = {
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],
-    minimize: false,
+    minimize: true,
     splitChunks: {
       minSize: 500000,
       cacheGroups: {

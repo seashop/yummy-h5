@@ -7,7 +7,6 @@ import { getUrlParams, checkEmail, checkPhone } from "../../utils";
 const Login = () => {
   const nav = useNavigate();
   useEffect(() => {
-    console.log("params--->", getUrlParams());
     if (sessionStorage.getItem("username")) {
       return nav("/home");
     }
@@ -58,6 +57,10 @@ const Login = () => {
       }
       sessionStorage.setItem("username", email);
     }
+    const urlParams = getUrlParams();
+    Object.keys(urlParams).forEach((key) => {
+      sessionStorage.setItem(key, urlParams[key]);
+    });
     nav("/home");
   };
   return (
@@ -77,9 +80,10 @@ const Login = () => {
             placeholder="Please Input Phone"
             type="tel"
             max="13"
-            className="loginInput"
+            className="loginInput phoneInput"
             onChange={handlePhoneChange}
           />
+          <div className="phonePre">+65</div>
         </Tabs.Tab>
       </Tabs>
       <Button

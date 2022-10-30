@@ -44,7 +44,7 @@ const Bottom = (props) => {
           sku_id: 0,
         };
       }),
-      message: "123",
+      message: `table: ${sessionStorage.getItem("table")}`,
       order_from: "wap",
       pay_cate: "empty",
       payment_type: "wx",

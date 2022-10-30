@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div className="home">
       <div className="header">
-        Table Num: <span>2</span>
+        Table: <span>{sessionStorage.getItem("table")}</span>
       </div>
       <Category updateOrderList={handleOrderList} />
       <OrderBottom orderList={orderList} />
