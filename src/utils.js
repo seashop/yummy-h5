@@ -17,7 +17,7 @@ export const checkEmail = (email) => {
   if (email === "") {
     return false;
   }
-  if (reg.test(email)) {
+  if (!reg.test(email)) {
     return false;
   }
   return true;
