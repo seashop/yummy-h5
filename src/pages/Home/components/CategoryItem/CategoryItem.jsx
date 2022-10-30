@@ -1,15 +1,20 @@
-import React from "react";
-import { Stepper, Image } from "antd-mobile";
+import React, { useState } from "react";
+import { Stepper, Image, ImageViewer } from "antd-mobile";
 import "./categoryItem.scss";
 
 const CategoryItem = (props) => {
   const { data, updateOrderList } = props;
+  const [visible, setVisible] = useState(false);
   const handleClick = (value) => {
     updateOrderList(data, value);
   };
   return (
     <div className="categoryItem">
-      <Image className="img" src={data.img.full_url} />
+      <Image
+        className="img"
+        src={data.img.full_url}
+        onClick={() => setVisible(true)}
+      />
       <div className="detail">
         <div className="title">{data.title}</div>
         {/* <div className="tags">{data.description}</div> */}
@@ -23,6 +28,13 @@ const CategoryItem = (props) => {
           onChange={handleClick}
         />
       </div>
+      <ImageViewer
+        image={data.img.full_url}
+        visible={visible}
+        onClose={() => {
+          setVisible(false);
+        }}
+      />
     </div>
   );
 };

@@ -28,6 +28,9 @@ const Home = () => {
 
   return (
     <div className="home">
+      <div className="header">
+        Table Num: <span>2</span>
+      </div>
       <Category updateOrderList={handleOrderList} />
       <OrderBottom orderList={orderList} />
     </div>
