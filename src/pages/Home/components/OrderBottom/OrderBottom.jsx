@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Badge, Button, Popup, Toast } from "antd-mobile";
 import { useNavigate } from "react-router";
 import shoppingCartImg from "@img/shopping_cart.png";
-import "./orderBottom.scss";
+import styles from "./orderBottom.scss";
 import OrderList from "./OrderList";
 import Path from "../../../../path";
 import request from "../../../../request";
@@ -32,7 +32,7 @@ const Bottom = (props) => {
     const data = {
       coupon_id: 0,
       coupon_price: 0,
-      delivery_method: "local",
+      delivery_method: "1",
       dintbl_id: "",
       goods_id: orderList.map((item) => item.goods_id),
       invite_code: "",
@@ -50,6 +50,7 @@ const Bottom = (props) => {
       payment_type: "wx",
       privacy_status: true,
       total_price: totalPrice,
+      is_anonymous: true,
     };
     try {
       const result = await request.post(url, data);
@@ -78,20 +79,20 @@ const Bottom = (props) => {
     }, 500);
   };
   return (
-    <div className="orderBottom">
+    <div className={styles.orderBottom}>
       <Badge content={totalCount}>
         <img
           src={shoppingCartImg}
-          className="cartImg"
+          className={styles.cartImg}
           onClick={handleShowOrderList}
         />
       </Badge>
-      <div className="totalPrice">Price: ${totalPrice.toFixed(2)}</div>
+      <div className={styles.totalPrice}>Price: ${totalPrice.toFixed(2)}</div>
       <Button
         loading={loading}
         color="primary"
         fill="none"
-        className="orderBtn"
+        className={styles.orderBtn}
         loadingText=""
         onClick={handleClick}
       >

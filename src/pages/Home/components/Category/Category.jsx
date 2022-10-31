@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Empty, SideBar, SpinLoading, Toast } from "antd-mobile";
-import "./category.scss";
+import styles from "./category.scss";
 import { useThrottleFn } from "ahooks";
 import NoData from "@img/nodata.png";
 import Path from "../../../../path";
@@ -100,28 +100,28 @@ const Category = (props) => {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       {loading && (
         <SpinLoading
           style={{ width: "100%", margin: "0 auto", marginTop: "30vh" }}
         />
       )}
       {!loading && list.length === 0 && (
-        <div className="empty">
+        <div className={styles.empty}>
           <img src={NoData} style={{ width: 100 }} />
-          <div className="emptyText">No Data</div>
+          <div className={styles.emptyText}>No Data</div>
         </div>
       )}
       {!loading && list.length > 0 && (
         <>
-          <div className="side">
+          <div className={styles.side}>
             <SideBar activeKey={String(activeKey)} onChange={handleChange}>
               {list.map((item) => (
                 <SideBar.Item key={item.category_id} title={item.title} />
               ))}
             </SideBar>
           </div>
-          <div className="main" ref={mainElementRef}>
+          <div className={styles.main} ref={mainElementRef}>
             {list.map((item) => (
               <div key={item.category_id}>
                 <h2 id={`anchor-${item.category_id}`}>{item.title}</h2>

@@ -1,7 +1,7 @@
 import { Toast } from "antd-mobile";
 import React, { useState, useEffect } from "react";
 import CategoryItem from "./CategoryItem";
-import "./categoryItem.scss";
+import styles from "./categoryItem.scss";
 
 const CategoryItemGroup = (props) => {
   const { categoryId, productList, updateOrderList } = props;
@@ -15,7 +15,7 @@ const CategoryItemGroup = (props) => {
     }
   }, [JSON.stringify(productList)]);
   return (
-    <div className="categoryItemGroup">
+    <div className={styles.categoryItemGroup}>
       {list.map((item) => (
         <CategoryItem
           data={item}

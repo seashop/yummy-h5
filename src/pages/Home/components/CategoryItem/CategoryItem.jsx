@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Stepper, Image, ImageViewer } from "antd-mobile";
-import "./categoryItem.scss";
+import styles from "./categoryItem.scss";
 
 const CategoryItem = (props) => {
   const { data, updateOrderList } = props;
@@ -9,21 +9,21 @@ const CategoryItem = (props) => {
     updateOrderList(data, value);
   };
   return (
-    <div className="categoryItem">
+    <div className={styles.categoryItem}>
       <Image
-        className="img"
+        className={styles.img}
         src={data.img.full_url}
         onClick={() => setVisible(true)}
       />
-      <div className="detail">
-        <div className="title">{data.title}</div>
+      <div className={styles.detail}>
+        <div className={styles.title}>{data.title}</div>
         {/* <div className="tags">{data.description}</div> */}
-        <div className="price">
-          <div className="discountPrice">{data.price}</div>
-          <div className="normalPrice"></div>
+        <div className={styles.price}>
+          <div className={styles.discountPrice}>{data.price}</div>
+          <div className={styles.normalPrice}></div>
         </div>
         <Stepper
-          className="handleBtn"
+          className={styles.handleBtn}
           defaultValue={data.count || 0}
           onChange={handleClick}
         />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Input, Button, Toast } from "antd-mobile";
-import "./login.scss";
+import styles from "./login.scss";
 import { useNavigate } from "react-router";
 import { getUrlParams, checkEmail, checkPhone } from "../../utils";
 
@@ -64,14 +64,14 @@ const Login = () => {
     nav("/home");
   };
   return (
-    <div className="login">
-      <div className="title">Welcome to yummy</div>
-      <Tabs className="tabs" onChange={handleTabsChange}>
+    <div className={styles.login}>
+      <div className={styles.title}>Welcome to yummy</div>
+      <Tabs className={styles.tabs} onChange={handleTabsChange}>
         <Tabs.Tab title="Email" key="Email">
           <Input
             placeholder="Please Input Email"
             type="email"
-            className="loginInput"
+            className={styles.loginInput}
             onChange={handleEmailChange}
           />
         </Tabs.Tab>
@@ -80,17 +80,17 @@ const Login = () => {
             placeholder="Please Input Phone"
             type="tel"
             max="13"
-            className="loginInput phoneInput"
+            className={`${styles.loginInput} ${styles.phoneInput}`}
             onChange={handlePhoneChange}
           />
-          <div className="phonePre">+65</div>
+          <div className={styles.phonePre}>+65</div>
         </Tabs.Tab>
       </Tabs>
       <Button
         block
         color="primary"
         size="large"
-        className="loginBtn"
+        className={styles.loginBtn}
         onClick={handleLogin}
       >
         Login

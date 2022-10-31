@@ -28,8 +28,10 @@
       width: calc(100% - 60px);
       padding-left: 60px;
     }
-    .adm-tabs-content {
-      position: relative;
+    :global {
+      .adm-tabs-content {
+        position: relative;
+      }
     }
     .phonePre {
       height: 106px;

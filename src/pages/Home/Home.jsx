@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Category from "./components/Category/Category";
 import OrderBottom from "./components/OrderBottom/OrderBottom";
-import "./home.scss";
+import styles from "./home.scss";
 
 const Home = () => {
   const [orderList, setOrderList] = useState([]);
@@ -27,8 +27,8 @@ const Home = () => {
   };
 
   return (
-    <div className="home">
-      <div className="header">
+    <div className={styles.home}>
+      <div className={styles.header}>
         Table: <span>{sessionStorage.getItem("table")}</span>
       </div>
       <Category updateOrderList={handleOrderList} />
