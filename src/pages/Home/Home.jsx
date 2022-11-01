@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Category from "./components/Category/Category";
 import OrderBottom from "./components/OrderBottom/OrderBottom";
 import styles from "./home.scss";
@@ -9,7 +9,7 @@ const Home = () => {
     if (product === null && count === 0) {
       return setOrderList([]);
     }
-    console.log("handleOrderList--->", product, count);
+    // console.log("handleOrderList--->", product, count);
     const currentGoodsId = product.goods_id;
     product.count = count;
     if (

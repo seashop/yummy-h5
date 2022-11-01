@@ -5,6 +5,10 @@ const Path = {
     category: "/category",
     product: "/product",
     orderPlace: "/order/place",
+    orderCalculate: "/order/calculate",
+    getOrderDetail: "/order/info",
+    getTableList: "/dining/user/table",
+    getTableIdByNo: "/dining/user/table",
   },
 };
 

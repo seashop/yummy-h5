@@ -24,7 +24,7 @@ module.exports = {
     proxy: {
       "/api": {
         target: "https://sea.fly.dev",
-        pathRewrite: { "^/api": "" },
+        pathRewrite: { "^/api/c74": "/c74" },
         changeOrigin: true,
       },
     },

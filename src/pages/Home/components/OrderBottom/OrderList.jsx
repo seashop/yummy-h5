@@ -10,7 +10,7 @@ const OrderList = (props) => {
   const handleEmpty = () => {
     updateOrderList(null, 0);
   };
-  console.log("orderList--->", orderList);
+  // console.log("orderList--->", orderList);
   return (
     <div className={styles.orderList}>
       <div className={styles.top}>

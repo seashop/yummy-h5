@@ -5,7 +5,7 @@ import OrderDetail from "./OrderDetail";
 
 const Result = () => {
   const params = useParams();
-  console.log("params--->", params);
+  // console.log("params--->", params);
   const sn = params.sn;
   if (String(sn) !== "0") {
     return <OrderDetail />;

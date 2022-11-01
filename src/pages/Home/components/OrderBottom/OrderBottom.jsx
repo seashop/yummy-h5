@@ -21,6 +21,7 @@ const Bottom = (props) => {
   }, 0);
   const [loading, setLoading] = useState(false);
   const handleClick = async () => {
+    const tableId = sessionStorage.getItem("tableId");
     if (orderList.length === 0) {
       return Toast.show({
         content: "Please Add Meals",
@@ -33,7 +34,7 @@ const Bottom = (props) => {
       coupon_id: 0,
       coupon_price: 0,
       delivery_method: "1",
-      dintbl_id: "",
+      dintbl_id: tableId,
       goods_id: orderList.map((item) => item.goods_id),
       invite_code: "",
       items: orderList.map((item) => {
@@ -52,14 +53,49 @@ const Bottom = (props) => {
       total_price: totalPrice,
       is_anonymous: true,
     };
+    const calculateUrl = `${Path.APIBaseUrl}${Path.v0.orderCalculate}`;
+    const calculateData = {
+      coupon_id: 0,
+      coupon_price: 0,
+      delivery_method: "1",
+      dintbl_id: tableId,
+      goods_id: orderList.map((item) => item.goods_id),
+      invite_code: "",
+      items: orderList.map((item) => {
+        return {
+          goods_id: item.goods_id,
+          num: item.count,
+          price: item.price,
+          sku_id: 0,
+        };
+      }),
+      message: `table: ${sessionStorage.getItem("table")}`,
+      order_from: "wap",
+      pay_cate: "empty",
+      payment_type: "wx",
+      privacy_status: true,
+      total_price: 0,
+      is_anonymous: true,
+    };
     try {
-      const result = await request.post(url, data);
-      console.log("order--->", result);
-      if (result.code === 0) {
-        nav("/result/" + result.result.id);
+      const calculateResult = await request.post(calculateUrl, calculateData);
+      // console.log("calculateResult--->", calculateResult);
+      if (calculateResult.code === 0) {
+        const totalMoney = calculateResult.result.total_money;
+        data.total_price = totalMoney;
+        const result = await request.post(url, data);
+        // console.log("order--->", result);
+        if (result.code === 0) {
+          nav("/result/" + result.result.order_num);
+        } else {
+          Toast.show({
+            content: result.message,
+            icon: "fail",
+          });
+        }
       } else {
         Toast.show({
-          content: result.message,
+          content: calculateResult.message,
           icon: "fail",
         });
       }

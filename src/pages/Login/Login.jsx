@@ -3,6 +3,8 @@ import { Tabs, Input, Button, Toast } from "antd-mobile";
 import styles from "./login.scss";
 import { useNavigate } from "react-router";
 import { getUrlParams, checkEmail, checkPhone } from "../../utils";
+import Path from "../../path";
+import request from "../../request";
 
 const Login = () => {
   const nav = useNavigate();
@@ -10,6 +12,7 @@ const Login = () => {
     if (sessionStorage.getItem("username")) {
       return nav("/home");
     }
+    loadTable();
   }, []);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -22,6 +25,35 @@ const Login = () => {
   };
   const handleTabsChange = (val) => {
     setTabKey(val);
+  };
+  const loadTable = async () => {
+    const urlParams = getUrlParams();
+    const table = urlParams.table;
+    const url = `${Path.APIBaseUrl}${Path.v0.getTableIdByNo}?title=${table}`;
+    try {
+      const result = await request.get(url);
+      if (result.code === 0) {
+        if (result.result.items.length > 0) {
+          const tableId = result.result.items[0].id;
+          sessionStorage.setItem("tableId", tableId);
+        } else {
+          Toast.show({
+            content: "No Table",
+            icon: "fail",
+          });
+        }
+      } else {
+        Toast.show({
+          content: result.message,
+          icon: "fail",
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        content: "network error",
+        icon: "fail",
+      });
+    }
   };
   const handleLogin = () => {
     if (tabKey === "Phone") {
