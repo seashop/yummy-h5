@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Input, Button, Toast } from "antd-mobile";
+import moment from "moment";
 import styles from "./login.scss";
 import { useNavigate } from "react-router";
 import { getUrlParams, checkEmail, checkPhone } from "../../utils";
 import Path from "../../path";
 import request from "../../request";
+import { expireTime } from "../../config/config";
 
 const Login = () => {
   const nav = useNavigate();
   useEffect(() => {
-    if (sessionStorage.getItem("username")) {
-      return nav("/home");
-    }
     loadTable();
+    if (localStorage.getItem("expire") !== null) {
+      const expire = localStorage.getItem("expire");
+      if (moment().diff(moment(Number(expire)), "seconds") < expireTime) {
+        const urlParams = getUrlParams();
+        Object.keys(urlParams).forEach((key) => {
+          sessionStorage.setItem(key, urlParams[key]);
+        });
+        nav("/home");
+      }
+    }
   }, []);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -93,6 +102,7 @@ const Login = () => {
     Object.keys(urlParams).forEach((key) => {
       sessionStorage.setItem(key, urlParams[key]);
     });
+    localStorage.setItem("expire", new Date().getTime());
     nav("/home");
   };
   return (
