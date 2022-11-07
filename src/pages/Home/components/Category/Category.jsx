@@ -8,10 +8,9 @@ import request from "../../../../request";
 import CategoryItemGroup from "../CategoryItem/CategoryItemGroup";
 
 const Category = (props) => {
-  const { updateOrderList } = props;
+  const { updateOrderList, productList, addedGoods } = props;
   const [activeKey, setActiveKey] = useState(0);
   const [list, setList] = useState([]);
-  const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { run } = useThrottleFn(
@@ -40,7 +39,6 @@ const Category = (props) => {
 
   useEffect(() => {
     loadData();
-    loadProductList();
   }, []);
 
   useEffect(() => {
@@ -81,19 +79,6 @@ const Category = (props) => {
     }
   };
 
-  const loadProductList = async () => {
-    setLoading(true);
-    const url = `${Path.APIBaseUrl}${Path.v0.product}`;
-    try {
-      const result = await request.get(url);
-      if (result.code === 0) {
-        setProductList(result.result.items);
-      }
-    } catch (error) {
-      console.log(JSON.stringify(error));
-    }
-  };
-
   const handleChange = (key) => {
     setActiveKey(key);
     document.getElementById(`anchor-${key}`).scrollIntoView();
@@ -126,6 +111,7 @@ const Category = (props) => {
               <div key={item.category_id}>
                 <h2 id={`anchor-${item.category_id}`}>{item.title}</h2>
                 <CategoryItemGroup
+                  addedGoods={addedGoods}
                   productList={productList}
                   categoryId={item.category_id}
                   updateOrderList={updateOrderList}

@@ -4,7 +4,7 @@ import CategoryItem from "./CategoryItem";
 import styles from "./categoryItem.scss";
 
 const CategoryItemGroup = (props) => {
-  const { categoryId, productList, updateOrderList } = props;
+  const { categoryId, productList, updateOrderList, addedGoods } = props;
   const [list, setList] = useState([]);
   useEffect(() => {
     if (productList.length > 0) {
@@ -18,6 +18,7 @@ const CategoryItemGroup = (props) => {
     <div className={styles.categoryItemGroup}>
       {list.map((item) => (
         <CategoryItem
+          addedGoods={addedGoods}
           data={item}
           key={item.goods_id}
           updateOrderList={updateOrderList}
