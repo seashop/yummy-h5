@@ -43,6 +43,10 @@ const Home = () => {
       const result = await request.get(url);
       if (result.code === 0) {
         setProductList(result.result.items);
+        sessionStorage.setItem(
+          "productList",
+          JSON.stringify(result.result.items)
+        );
       }
     } catch (error) {
       console.log(JSON.stringify(error));
@@ -81,14 +85,19 @@ const Home = () => {
     } else {
       setVisible(true);
     }
-    loadProductList();
+    const temp = sessionStorage.getItem("productList");
+    if (!temp) {
+      loadProductList();
+    } else {
+      setProductList(JSON.parse(temp));
+    }
   }, []);
 
   useEffect(() => {
     if (productList.length > 0) {
       loadCart();
     }
-  }, [JSON.stringify(productList)]);
+  }, [productList]);
 
   return (
     <div className={styles.home}>

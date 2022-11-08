@@ -4,14 +4,14 @@ import styles from "./categoryItem.scss";
 
 const CategoryItem = (props) => {
   const { data, updateOrderList, addedGoods } = props;
-  if (addedGoods && addedGoods.length > 0) {
-    const temp = addedGoods.find(
-      (item) => String(item.goods_id) === String(data.goods_id)
-    );
-    if (temp) {
-      data.count = temp.quantity;
-    }
-  }
+  // if (addedGoods && addedGoods.length > 0) {
+  //   const temp = addedGoods.find(
+  //     (item) => String(item.goods_id) === String(data.goods_id)
+  //   );
+  //   if (temp) {
+  //     data.count = temp.quantity;
+  //   }
+  // }
   const [visible, setVisible] = useState(false);
   const handleClick = (value) => {
     updateOrderList(data, value);
@@ -31,6 +31,8 @@ const CategoryItem = (props) => {
           <div className={styles.normalPrice}></div>
         </div>
         <Stepper
+          value={data.count || 0}
+          disabled={data.disabled}
           className={styles.handleBtn}
           defaultValue={data.count || 0}
           onChange={handleClick}

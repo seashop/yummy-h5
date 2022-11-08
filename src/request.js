@@ -46,6 +46,14 @@ request.put = (url, data = {}, options = {}) =>
     ...options,
   });
 
+request.patch = (url, data = {}, options = {}) =>
+  query({
+    method: "patch",
+    url,
+    data,
+    ...options,
+  });
+
 request.delete = (url, data = {}, options = {}) =>
   query({
     url,

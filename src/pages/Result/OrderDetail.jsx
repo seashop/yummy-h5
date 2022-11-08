@@ -22,7 +22,18 @@ const OrderDetail = (props) => {
       const result = await request.get(url);
       // console.log("result--->", result);
       if (result.code === 0) {
-        setOrderDetail(result.result);
+        const goods = result.result.goods;
+        const productList = JSON.parse(sessionStorage.getItem("productList"));
+        const temp = [];
+        goods.forEach((good) => {
+          const item = productList.find((a) => a.goods_id === good.goods_id);
+          item.count = good.quantity;
+          item.disabled = true;
+          temp.push(item);
+        });
+        const obj = result.result;
+        obj.goods = temp;
+        setOrderDetail(obj);
       } else {
         Toast.show({
           content: result.message,
@@ -98,13 +109,13 @@ const OrderDetail = (props) => {
             className={styles1.categoryItemGroup}
             style={{ padding: "0 10px", width: "calc(100% - 20px)" }}
           >
-            {/* {orderDetail.goods.map((item) => (
+            {orderDetail.goods.map((item) => (
               <CategoryItem
                 data={item}
-                key={`orderList-${item.id}`}
+                key={`orderList-${item.goods_id}`}
                 updateOrderList={() => {}}
               />
-            ))} */}
+            ))}
           </div>
         </Collapse.Panel>
       </Collapse>

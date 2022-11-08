@@ -60,7 +60,12 @@ const Bottom = (props) => {
       };
     }
     try {
-      const result = await request.post(url, data);
+      let result = null;
+      if (cartId) {
+        result = await request.patch(url, data);
+      } else {
+        result = await request.post(url, data);
+      }
       console.log("result--->", result);
       if (result.code === 0) {
         sessionStorage.setItem("cartId", result.result.id);
