@@ -90,10 +90,10 @@ const OrderDetail = (props) => {
   }
   return (
     <div className={styles.orderDetail}>
-      <h2>已下单</h2>
-      <div className={styles.desc1}>本单消费金额</div>
+      <h2>Ordered Successfully</h2>
+      {/* <div className={styles.desc1}>Payment</div> */}
       <div className={styles.price}>
-        $ {calculateDetail.money}
+        $ {calculateDetail.total_money}
         {/* <span>$ {orderDetail.goods_money}</span> */}
       </div>
       <div className={styles.desc2}>
@@ -104,7 +104,7 @@ const OrderDetail = (props) => {
         </div>
       </div>
       <Collapse defaultActiveKey={["1"]} className={styles.list}>
-        <Collapse.Panel key="1" title="订单详情">
+        <Collapse.Panel key="1" title="Details">
           <div
             className={styles1.categoryItemGroup}
             style={{ padding: "0 10px", width: "calc(100% - 20px)" }}
@@ -121,25 +121,25 @@ const OrderDetail = (props) => {
       </Collapse>
       <div className={styles.desc3}>
         <div className={styles.desc3Item}>
-          <div>小计</div>
+          <div>SubTotal</div>
           <div>$ {calculateDetail.sub_money}</div>
         </div>
         <div className={styles.desc3Item}>
-          <div>税费</div>
+          <div>GTS</div>
           <div>$ {calculateDetail.gts_fee}</div>
         </div>
         <div className={styles.desc3Item}>
-          <div>服务费</div>
+          <div>SVC</div>
           <div>$ {calculateDetail.svc_fee}</div>
         </div>
         <div className={styles.desc3Item}>
-          <div>总计</div>
+          <div>Total</div>
           <div>$ {calculateDetail.total_money}</div>
         </div>
       </div>
       <div className={styles.handlePart}>
         <div className={styles.leftPart}>
-          待支付: $ {calculateDetail.total_money}
+          Payment: $ {calculateDetail.total_money}
         </div>
         <div className={styles.rightPart}>
           <Button
@@ -147,7 +147,7 @@ const OrderDetail = (props) => {
             color="primary"
             onClick={handleContinue}
           >
-            Continue
+            Order More
           </Button>
           {/* <Button color="primary" fill="solid">
             结账
