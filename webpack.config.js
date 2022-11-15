@@ -27,6 +27,11 @@ module.exports = {
         pathRewrite: { "^/api/c74": "/c74" },
         changeOrigin: true,
       },
+      "/apis": {
+        target: "https://airdb.fly.dev",
+        pathRewrite: { "^/apis": "/apis" },
+        changeOrigin: true,
+      },
     },
   },
   optimization: {
