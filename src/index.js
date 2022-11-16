@@ -7,10 +7,10 @@ import Login from "./pages/Login/Login";
 import Result from "./pages/Result/Result";
 import Analysis from "./pages/Inn/Analysis/Analysis";
 import { createRoot } from "react-dom/client";
-
+// console.log("contentBasePath--->", contentBasePath);
 const App = () => {
   return (
-    <BrowserRouter basename="h5">
+    <BrowserRouter basename={String(contentBasePath).replace(/\//g, "")}>
       <Routes>
         <Route element={<Home />} path="/home"></Route>
         <Route element={<Login />} path="/login"></Route>
