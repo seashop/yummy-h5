@@ -20,6 +20,7 @@ module.exports = {
     port: 8080,
     open: false,
     hot: true,
+    publicPath: "/h5/",
     historyApiFallback: true,
     proxy: {
       "/api": {

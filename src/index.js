@@ -10,7 +10,7 @@ import { createRoot } from "react-dom/client";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="h5">
       <Routes>
         <Route element={<Home />} path="/home"></Route>
         <Route element={<Login />} path="/login"></Route>
