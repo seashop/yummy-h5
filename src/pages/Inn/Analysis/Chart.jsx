@@ -20,14 +20,15 @@ const Chart = (props) => {
       grid: {
         top: 20,
         bottom: 0,
-        width: "100%",
         height: 200,
         left: 40,
-        right: 0,
+        right: 20,
       },
       series: [
         {
-          data: data.map((item) => item.money || item.order),
+          data: data.map((item) =>
+            item.money === 0 ? 0 : item.money || item.order
+          ),
           type: "line",
           smooth: true,
         },
