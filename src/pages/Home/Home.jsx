@@ -93,11 +93,11 @@ const Home = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (productList.length > 0) {
-      loadCart();
-    }
-  }, [productList]);
+  // useEffect(() => {
+  //   if (productList.length > 0) {
+  //     loadCart();
+  //   }
+  // }, [productList]);
 
   return (
     <div className={styles.home}>
