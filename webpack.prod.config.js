@@ -107,7 +107,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
     new webpack.DefinePlugin({
-      contentBasePath: contentBasePath,
+      contentBasePath: contentBasePath === "/" ? "" : contentBasePath,
     }),
   ],
 };
