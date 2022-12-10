@@ -8,10 +8,10 @@ import request from "../../../../request";
 import CategoryItemGroup from "../CategoryItem/CategoryItemGroup";
 
 const Category = (props) => {
-  const { updateOrderList } = props;
+  const { updateOrderList, productList, addedGoods } = props;
   const [activeKey, setActiveKey] = useState(0);
   const [list, setList] = useState([]);
-  const [productList, setProductList] = useState([]);
+  const [childList, setChildList] = useState(productList);
   const [loading, setLoading] = useState(false);
 
   const { run } = useThrottleFn(
@@ -39,9 +39,31 @@ const Category = (props) => {
   const mainElementRef = useRef(null);
 
   useEffect(() => {
-    loadData();
-    loadProductList();
+    const temp = sessionStorage.getItem("categoryList");
+    if (!temp) {
+      loadData();
+    } else {
+      const arr = JSON.parse(temp);
+      setList(arr);
+      if (arr.length > 0) {
+        setActiveKey(arr[0].category_id);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (productList.length > 0 && addedGoods.length > 0) {
+      productList.forEach((product) => {
+        const item = addedGoods.find(
+          (item) => item.goods_id === product.goods_id
+        );
+        if (item) {
+          product.count = item.quantity;
+        }
+      });
+      setChildList([...productList]);
+    }
+  }, [productList, addedGoods]);
 
   useEffect(() => {
     const mainElement = mainElementRef.current;
@@ -61,6 +83,10 @@ const Category = (props) => {
       const result = await request.get(url);
       if (result.code === 0) {
         setList(result.result.items);
+        sessionStorage.setItem(
+          "categoryList",
+          JSON.stringify(result.result.items)
+        );
         if (result.result.items.length > 0) {
           setActiveKey(result.result.items[0].category_id);
         }
@@ -78,19 +104,6 @@ const Category = (props) => {
         icon: "fail",
       });
       setLoading(false);
-    }
-  };
-
-  const loadProductList = async () => {
-    setLoading(true);
-    const url = `${Path.APIBaseUrl}${Path.v0.product}`;
-    try {
-      const result = await request.get(url);
-      if (result.code === 0) {
-        setProductList(result.result.items);
-      }
-    } catch (error) {
-      console.log(JSON.stringify(error));
     }
   };
 
@@ -126,7 +139,8 @@ const Category = (props) => {
               <div key={item.category_id}>
                 <h2 id={`anchor-${item.category_id}`}>{item.title}</h2>
                 <CategoryItemGroup
-                  productList={productList}
+                  addedGoods={addedGoods}
+                  productList={childList}
                   categoryId={item.category_id}
                   updateOrderList={updateOrderList}
                 />

@@ -1,18 +1,21 @@
+require("dotenv").config();
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
 // const { DEV, DEBUG } = process.env;
 // process.env.BABEL_ENV = DEV ? "development" : "production";
 // process.env.NODE_ENV = DEV ? "development" : "production";
-// console.log("env--->", process);
+const contentBasePath = process.env.CONTENT_BASE_PATH;
 module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "js/[name].[contenthash:8].js",
+    filename: "[name].[contenthash:8].js",
+    publicPath: contentBasePath,
   },
   mode: "production",
   devtool: "source-map",
@@ -100,9 +103,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "/public/index.html"),
-      publicPath: "/",
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({
+      contentBasePath: contentBasePath === "/" ? "" : contentBasePath,
+    }),
   ],
 };

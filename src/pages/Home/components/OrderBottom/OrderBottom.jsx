@@ -29,6 +29,71 @@ const Bottom = (props) => {
       });
     }
     setLoading(true);
+    let url = `${Path.APIBaseUrl}${Path.v0.createCart}`;
+    let data = {
+      dintbl_id: tableId,
+      diners: sessionStorage.getItem("dinners"),
+      invite_code: "",
+      goods: orderList.map((item) => {
+        return {
+          goods_id: item.goods_id,
+          quantity: item.count,
+          // price: item.price,
+          sku_id: 0,
+        };
+      }),
+    };
+    const cartId = sessionStorage.getItem("cartId");
+    if (cartId) {
+      url = `${Path.APIBaseUrl}${Path.v0.updateCart}`.replace(
+        "{cartId}",
+        cartId
+      );
+      data = {
+        goods: orderList.map((item) => {
+          return {
+            goods_id: item.goods_id,
+            quantity: item.count,
+            sku_id: 0,
+          };
+        }),
+      };
+    }
+    try {
+      let result = null;
+      if (cartId) {
+        result = await request.patch(url, data);
+      } else {
+        result = await request.post(url, data);
+      }
+      console.log("result--->", result);
+      if (result.code === 0) {
+        sessionStorage.setItem("cartId", result.result.id);
+        nav("/result/" + result.result.id);
+      } else {
+        Toast.show({
+          content: result.message,
+          icon: "fail",
+        });
+      }
+      setLoading(false);
+    } catch (error) {
+      Toast.show({
+        content: "network error",
+        icon: "fail",
+      });
+      setLoading(false);
+    }
+  };
+  const handleClick1 = async () => {
+    const tableId = sessionStorage.getItem("tableId");
+    if (orderList.length === 0) {
+      return Toast.show({
+        content: "Please Add Meals",
+        icon: "fail",
+      });
+    }
+    setLoading(true);
     const url = `${Path.APIBaseUrl}${Path.v0.orderPlace}`;
     const data = {
       coupon_id: 0,

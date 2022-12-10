@@ -1,18 +1,22 @@
+require("dotenv").config();
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
 // const { DEV, DEBUG } = process.env;
 // process.env.BABEL_ENV = DEV ? "development" : "production";
 // process.env.NODE_ENV = DEV ? "development" : "production";
 // console.log("env--->", process);
+const contentBasePath = process.env.CONTENT_BASE_PATH;
 module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "js/[name].[hash:8].js",
+    filename: "[name].[hash:8].js",
+    publicPath: contentBasePath,
   },
   mode: "development",
   devtool: "inline-source-map",
@@ -20,11 +24,22 @@ module.exports = {
     port: 8080,
     open: false,
     hot: true,
-    historyApiFallback: true,
+    static: {
+      directory: "./dist",
+      publicPath: contentBasePath,
+    },
+    historyApiFallback: {
+      index: "/h5/index.html",
+    },
     proxy: {
       "/api": {
         target: "https://sea.fly.dev",
         pathRewrite: { "^/api/c74": "/c74" },
+        changeOrigin: true,
+      },
+      "/apis": {
+        target: "https://airdb.fly.dev",
+        pathRewrite: { "^/apis": "/apis" },
         changeOrigin: true,
       },
     },
@@ -113,9 +128,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "/public/index.html"),
-      publicPath: "/",
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({
+      contentBasePath: contentBasePath,
+    }),
   ],
 };
