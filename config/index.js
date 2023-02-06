@@ -47,7 +47,7 @@ const config = {
     }
   },
   h5: {
-    publicPath: '/',
+    publicPath: '/yummy-h5/',
     staticDirectory: 'static',
     postcss: {
       autoprefixer: {
