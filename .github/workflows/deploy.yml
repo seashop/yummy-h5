@@ -30,7 +30,7 @@ jobs:
           CI: true
         run: |
           yarn install
-          yarn build:prod
+          yarn build:h5
 
           # - name: Publish to Cloudflare Pages
           #   uses: cloudflare/pages-action@1
