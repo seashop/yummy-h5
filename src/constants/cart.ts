@@ -1,0 +1,1 @@
+export const CART_LIST_CHANGE = 'CART_LIST_CHANGE'

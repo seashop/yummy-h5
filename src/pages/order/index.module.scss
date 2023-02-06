@@ -1,0 +1,31 @@
+.order-cotainer {
+  height: 100%;
+  width: 100%;
+  padding: 0 29px;
+  background-color: #F5F5F5;
+  .bottom {
+    position: fixed;
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .pay-button {
+      background: #F24822;
+      padding: 11px 31px;
+      border-radius: 15px;
+      font-family: 'Nunito';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 56px;
+      color: #FFFFFF;
+    }
+  }
+
+}

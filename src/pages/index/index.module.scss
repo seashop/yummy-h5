@@ -1,0 +1,156 @@
+.taro_page {
+  overflow: hidden;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+.index {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .text {
+    color: #fff;
+  }
+  .fs-38 {
+    font-size: 38px;
+  }
+  .fs-30 {
+    font-size: 30px;
+  }
+  .index-bg {
+    box-sizing: border-box;
+    height: 500px;
+    background: #171612;
+    padding: 152px 30px 143px;
+    display: flex;
+    flex-direction: column;
+    .bg-info {
+      display: flex;
+      flex-direction: row;
+      .avatar {
+        width: 120px;
+        height: 120px;
+        background: #FFFFFF;
+        border-radius: 50%;
+      }
+      .info {
+        margin-left: 21px;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    .tip {
+      // width: 690px;
+      height: 100px;
+      margin-top: 83px;
+      background: #323232;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      color: #F4DC9A;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 27px;
+      padding: 25px 37px;
+      box-sizing: border-box;
+      .btn {
+        // position: absolute;
+        width: 135px;
+        height: 50px;
+        background: #F4DC9A;
+        border-radius: 7px;
+        color: #816830;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  .index-bottom {
+    position: fixed;
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    padding: 0 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .cart {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      font-weight: 400;
+      font-size: 36px;
+      .image {
+        margin-right: 38px;
+      }
+      .cart-count {
+        position: absolute;
+        left: 90px;
+        top: 0;
+        background: #FF0202;
+        height: 38px;
+        width: 38px;
+        border-radius: 50%;
+        color: #fff;
+        text-align: center;
+        line-height: 38px;
+        font-size: 36px;
+      }
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 207px;
+      height: 78px;
+      background: #F24822;
+      border-radius: 15px;
+      font-family: 'Nunito';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 36px;
+      color: #fff;
+    }
+  }
+  .bottom-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .avatar {
+      margin-bottom: 26px;
+    }
+    .name {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+    .desc {
+      font-size: 30px;
+      color: #818181;
+    }
+    .divider {
+      color: #ECECEC;
+      padding: 0 30px;
+      width: 90%;
+    }
+    .content {
+      .nut-icon {
+        margin-right: 42px;
+      }
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 30px;
+    }
+  }
+}

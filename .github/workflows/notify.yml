@@ -1,0 +1,26 @@
+name: Message Notify
+on: [push]
+jobs:
+
+  notification:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+        args: '{{ GITHUB_SERVER_URL }}/{{ GITHUB_REPOSITORY }} The branch {{ GITHUB_REF_NAME }} has been pushed by {{ EVENT_PAYLOAD.sender.login }}.'
+
+    - name: feishu text message
+      uses: foxundermoon/feishu-action@v2
+      with:
+        url: ${{ secrets.FEISHU_BOT_WEBHOOK_URL }}
+        msg_type: text
+        content: |
+          text: |
+            repository: ${{ github.repository }}
+            branch : ${{ github.ref_name }}
+            committer: ${{ github.actor }}
+            compare: ${{ github.event.compare }}
+            job status: ${{ job.status }}
