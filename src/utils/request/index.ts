@@ -1,38 +1,43 @@
-import axios from "axios";
+import Taro from '@tarojs/taro';
+import {
+  baseUrl,
+} from './config';
 
-const instance = axios.create({
-  baseURL: 'https://www.xxx.api',
-  timeout: 8000,
-  headers: {
+const request_data = {
 
-  }
-});
+};
 
-
-instance.interceptors.request.use((config) => {
-  return config;
-}, error => {
-  return error;
-})
-
-instance.interceptors.response.use(res => {
-  const {code} = res.data;
-  if(code !== 200 && code !== 0 && code !== 2000) {
-    console.log('请求成功，但被拦截的数据',res)
-    throw res.data;
-  }
-  return res.data;
-}, error => {
-  return error;
-})
-
-function request(method, url, params, config) {
-  return instance.request({
-    method: method,
-    url: url,
-    params: params,
-    ...config
+export default (options = {
+  url: '',
+  method: 'GET',
+  data: {}
+}) => {
+  return Taro.request({
+    url: baseUrl + options.url,
+    data: {
+      ...request_data,
+      ...options.data,
+    },
+    header: {
+      'Content-Type': 'application/json',
+    },
+    method: (options.method as any).toUpperCase(),
+  }).then(res => {
+    const {
+      statusCode,
+      data
+    } = res;
+    if (statusCode >= 200 && statusCode < 300) {
+      // if (data.status !== 'ok') {
+      //   Taro.showToast({
+      //     title: `${res.data.error.message}~` || res.data.error.code,
+      //     icon: 'none',
+      //     mask: true,
+      //   });
+      // }
+      return data;
+    } else {
+      throw new Error(`网络请求错误，状态码${statusCode}`);
+    }
   });
-}
-
-export default request
+};

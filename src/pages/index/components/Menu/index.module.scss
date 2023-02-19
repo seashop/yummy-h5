@@ -76,20 +76,22 @@
       }
       .good-image {
         margin-right: 23px;
+        min-width: 195px;
+        min-height: 195px;
       }
       .good-info {
         display: flex;
+        flex: 1;
         flex-direction: column;
         justify-content: space-between;
+        position: relative;
         .good-amnout {
           color: #FF0202;
-          margin-right: 26px;
+          width: 100px;
+          // margin-right: 26px;
         }
         .good-count {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
+          justify-content: flex-end;
         }
       }
     }
