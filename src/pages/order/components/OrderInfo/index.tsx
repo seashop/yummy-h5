@@ -1,8 +1,12 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Taro from '@tarojs/taro';
+import {useSelector, useDispatch} from 'react-redux'
 import { Image, Input  } from '@nutui/nutui-react';
+import APIPATH from '../../../../utils/request/config'
 import './index.module.scss'
 export default function index() {
+  const cartList = useSelector(state => state.cart.cartList)
+  const allAmount = useSelector(state => state.cart.allAmount)
   const [extraText, UpdateExtraText] = useState('')
   const arr: any = [
     {
@@ -18,25 +22,29 @@ export default function index() {
       amount: 15
     }
   ]
+
+  useEffect(() => {
+    console.log(cartList)
+  })
   return (
     <div className='order-info-container'>
       <p className='goods-count'>共2件商品</p>
       <div className='goods-list'>
-        {arr.map((item, index) => {
+        {cartList.map((item, index) => {
           return <div className='goods-item' key={index}>
             <Image
-              src={item.img}
+              src={APIPATH.getImgUrl.replace('{id}', item.imgIds[0])}
               width={Taro.pxTransform(70)}
               height={Taro.pxTransform(70)}
             ></Image>
-            <p className='good-name'>{item.text}</p>
+            <p className='good-name'>{item.title}</p>
             <p className='good-count'>x{item.count}</p>
-            <p className='good-amount'>{item.amount}</p>
+            <p className='good-amount'>{item.price}</p>
           </div>
         })}
       </div>
       <div className='goods-amount'>
-        合计30
+        合计{allAmount}
       </div>
       <div className='extra-text'>
           <Input

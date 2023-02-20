@@ -13,8 +13,6 @@ function Menu() {
   const [leftVal, setLeftVal] = useState([])
   const [rightVal, setRightVal] = useState([])
   const dispatch = useDispatch()
-  const cartList = useSelector(state => state.cart.cartList)
-  const allAmount = useSelector(state => state.cart.allAmount)
   const rightMenu = useRef(null);
 
   useEffect(() => {
@@ -52,22 +50,6 @@ function Menu() {
       setRightVal(rigthArr)
     })
   }, [])
-  // let rightVal = [
-  //   {rootIndex: 0, type: '司康', arr: [
-  //     {id: 0, img: '', name: 'Mocktail', amount: 15},
-  //     {id: 1, img: '', name: 'Mocktail', amount: 16},
-  //     {id: 2, img: '', name: 'Mocktail', amount: 17},
-  //     {id: 3, img: '', name: 'Mocktail', amount: 18}]},
-  //   {rootIndex: 1, type: '肉桂卷', arr: [
-  //     {id: 4, img: '', name: 'Mocktail1', amount: 15},
-  //     {id: 5, img: '', name: 'Mocktail1', amount: 16},
-  //     {id: 6, img: '', name: 'Mocktail1', amount: 17},
-  //     {id: 7, img: '', name: 'Mocktail1', amount: 18}]},
-  //   {rootIndex: 2, type: '贝果', arr: [
-  //     {id: 8, img: '', name: 'Mocktail1', amount: 15},
-  //     {id: 9, img: '', name: 'Mocktail1', amount: 16},
-  //     {id: 10, img: '', name: 'Mocktail1', amount: 17},
-  //     {id: 11, img: '', name: 'Mocktail1', amount: 18}]}]
 
   let messageList = [
     {
@@ -184,8 +166,10 @@ function Menu() {
                     </Image>
                     <View className="good-info">
                       <Text>{good.title}</Text>
-                      <Text className='good-amnout'>{good.price.toFixed(2)}</Text>
-                      <InputNumber className='good-count' min={0} readonly onChangeFuc={(value, e) => handleCountChange(value, e, good)}></InputNumber>
+                      <View className='amount-count'>
+                        <Text className='good-amnout'>{good.price.toFixed(2)}</Text>
+                        <InputNumber className='good-count' min={0} readonly onChangeFuc={(value, e) => handleCountChange(value, e, good)}></InputNumber>
+                      </View>
                     </View>
                   </View>
                 })}
