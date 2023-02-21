@@ -40,9 +40,9 @@ jobs:
           #     directory: dist
           #     gitHubToken: ${{ secrets.GITHUBBOTTOKEN }}
 
-           - name: Publish to Github Pages
-             uses: peaceiris/actions-gh-pages@v3
-             with:
-               github_token: ${{ secrets.GITHUBBOTTOKEN }}
-               publish_branch: gh-pages
-               publish_dir: dist
+      - name: Publish to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUBBOTTOKEN }}
+          publish_branch: gh-pages
+          publish_dir: dist
