@@ -25,8 +25,8 @@ export default function cart (state = INITIAL_STATE, action) {
       return {
         ...state,
         allAmount: state.cartList.reduce((prev, next) => {
-          return prev + next.amount * +next.count
-        }, 0)
+          return prev + next.price * + next.count
+        }, 0).toFixed(2)
       }
      default:
        return state

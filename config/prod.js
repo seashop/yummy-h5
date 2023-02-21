@@ -6,6 +6,8 @@ module.exports = {
   },
   mini: {},
   h5: {
+    publicPath: '/yummy-h5/',
+    staticDirectory: 'static',
     /**
      * WebpackChain 插件配置
      * @docs https://github.com/neutrinojs/webpack-chain

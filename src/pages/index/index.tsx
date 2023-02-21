@@ -9,7 +9,6 @@ import Menu from './components/Menu/Index'
 function Index () {
   console.log('rerender')
   const [showBottomRound, setShowBottomRound] = useState(false);
-  const goodsBoxOffsetHeightArr = useRef([])
   const cartList = useSelector(state => state.cart.cartList)
   const allAmount = useSelector(state => state.cart.allAmount)
 

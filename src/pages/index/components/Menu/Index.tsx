@@ -3,34 +3,53 @@ import {useSelector, useDispatch} from 'react-redux'
 import { View, Text } from '@tarojs/components'
 import { Tabs, TabPane, Image, InputNumber } from '@nutui/nutui-react';
 import Taro from '@tarojs/taro';
+import request from '../../../../utils/request'
+import APIPATH from '../../../../utils/request/config'
 import './index.module.scss'
 function Menu() {
   const [tab1value, setTab1value] = useState<string>('0');
   const [leftCur, setLeftCur] = useState<number>(0)
   const goodsBoxOffsetHeightArr = useRef([])
+  const [leftVal, setLeftVal] = useState([])
+  const [rightVal, setRightVal] = useState([])
   const dispatch = useDispatch()
-  const cartList = useSelector(state => state.cart.cartList)
-  const allAmount = useSelector(state => state.cart.allAmount)
   const rightMenu = useRef(null);
 
+  useEffect(() => {
+    request({
+      url: APIPATH.getCategoryList,
+      method: 'get',
+      data: {}
+    }).then((res) => {
+      setLeftVal(res.cats.map(((item, index) => {
+        return {
+          index,
+          ...item
+        }
+      })))
+    })
 
-  const leftVal = [{id: 0, name: '司康'}, {id: 1, name: '肉桂卷'}, {id:2, name: '贝果'}]
-  let rightVal = [
-    {rootIndex: 0, type: '司康', arr: [
-      {id: 0, img: '', name: 'Mocktail', amount: 15},
-      {id: 1, img: '', name: 'Mocktail', amount: 16},
-      {id: 2, img: '', name: 'Mocktail', amount: 17},
-      {id: 3, img: '', name: 'Mocktail', amount: 18}]},
-    {rootIndex: 1, type: '肉桂卷', arr: [
-      {id: 4, img: '', name: 'Mocktail1', amount: 15},
-      {id: 5, img: '', name: 'Mocktail1', amount: 16},
-      {id: 6, img: '', name: 'Mocktail1', amount: 17},
-      {id: 7, img: '', name: 'Mocktail1', amount: 18}]},
-    {rootIndex: 2, type: '贝果', arr: [
-      {id: 8, img: '', name: 'Mocktail1', amount: 15},
-      {id: 9, img: '', name: 'Mocktail1', amount: 16},
-      {id: 10, img: '', name: 'Mocktail1', amount: 17},
-      {id: 11, img: '', name: 'Mocktail1', amount: 18}]}]
+    request({
+      url: APIPATH.getProductList,
+      method: 'get',
+      data: {}
+    }).then((res) => {
+      let map = {}
+      let rigthArr = []
+      res.products.forEach((item, index) => {
+        let {catTitle} = item
+        if (map[catTitle]) {
+          map[catTitle].push(item)
+        } else {
+          map[catTitle] = [item]
+        }
+      })
+      Object.entries(map).forEach(([key, value]) => {
+        rigthArr.push({type: key, arr: value})
+      })
+      setRightVal(rigthArr)
+    })
+  }, [])
 
   let messageList = [
     {
@@ -111,7 +130,6 @@ function Menu() {
                     return <Image
                       key={imgIndex}
                       src={imgItem}
-                      onClick={() => handleClickImage(imgItem)}
                       width={Taro.pxTransform(220)}
                       height={Taro.pxTransform(225)}>
                     </Image>
@@ -130,9 +148,9 @@ function Menu() {
             <View
               key={index}
               className='menu-item'
-              style={{color: (item.id === leftCur) ? '#F24822' : '#919191'}}
-              onClick={() => handleLeftMenuClick(item.id)}>
-                {item.name}
+              style={{color: (item.index === leftCur) ? '#F24822' : '#919191'}}
+              onClick={() => handleLeftMenuClick(item.index)}>
+                {item.title}
             </View>)}
         </View>
         <View className='menu-right' ref={rightMenu}>
@@ -142,15 +160,15 @@ function Menu() {
                   return <View key={index1} className='goods-item'>
                     <Image
                       className='good-image'
-                      src={require('../../assets/goods-img-default.png')}
+                      src={APIPATH.getImgUrl.replace('{id}', good.imgIds[0])}
                       width={Taro.pxTransform(195)}
                       height={Taro.pxTransform(195)}>
                     </Image>
                     <View className="good-info">
-                      <Text>{good.name}</Text>
-                      <View className='good-count'>
-                        <Text className='good-amnout'>{good.amount}</Text>
-                        <InputNumber min={0} readonly onChangeFuc={(value, e) => handleCountChange(value, e, good)}></InputNumber>
+                      <Text>{good.title}</Text>
+                      <View className='amount-count'>
+                        <Text className='good-amnout'>{good.price.toFixed(2)}</Text>
+                        <InputNumber className='good-count' min={0} readonly onChangeFuc={(value, e) => handleCountChange(value, e, good)}></InputNumber>
                       </View>
                     </View>
                   </View>
