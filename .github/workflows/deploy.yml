@@ -20,10 +20,8 @@ jobs:
         shell: bash
         run: |
           # cat .env.production | base64
-          # echo ${{ secrets.CONFIG }} | base64 --decode > .env.production
-          #sed -i '/CONTENT_BASE_PATH=/s#=.*#=/h5/#g' ./.env
-          #cat ./.env
-          echo  1
+          # echo ${{ secrets.CONFIG }} | base64 --decode > config/dev.js
+          # echo ${{ secrets.CONFIG }} | base64 --decode > config/prod.js
 
       - name: Build
         env:

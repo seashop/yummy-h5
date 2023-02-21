@@ -6,7 +6,7 @@ module.exports = {
   },
   mini: {},
   h5: {
-    publicPath: '/yummy-merchant',
+    publicPath: '/yummy-h5',
     staticDirectory: 'static',
     esnextModules: ['taro-ui']
   }
