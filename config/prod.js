@@ -6,7 +6,7 @@ module.exports = {
   },
   mini: {},
   h5: {
-    publicPath: '/yummy-h5',
+    publicPath: '/yummy-h5/',
     staticDirectory: 'static',
     /**
      * WebpackChain 插件配置
