@@ -11,23 +11,23 @@ function Menu() {
   const [leftCur, setLeftCur] = useState<number>(0)
   const goodsBoxOffsetHeightArr = useRef([])
   const [leftVal, setLeftVal] = useState([])
-  const [rightVal, setRightVal] = useState([])
+  const [menuList, setMenuList] = useState([])
   const dispatch = useDispatch()
   const rightMenu = useRef(null);
 
   useEffect(() => {
-    request({
-      url: APIPATH.getCategoryList,
-      method: 'get',
-      data: {}
-    }).then((res) => {
-      setLeftVal(res.cats.map(((item, index) => {
-        return {
-          index,
-          ...item
-        }
-      })))
-    })
+    // request({
+    //   url: APIPATH.getCategoryList,
+    //   method: 'get',
+    //   data: {}
+    // }).then((res) => {
+    //   setLeftVal(res.cats.map(((item, index) => {
+    //     return {
+    //       index,
+    //       ...item
+    //     }
+    //   })))
+    // })
 
     request({
       url: APIPATH.getProductList,
@@ -47,7 +47,7 @@ function Menu() {
       Object.entries(map).forEach(([key, value]) => {
         rigthArr.push({type: key, arr: value})
       })
-      setRightVal(rigthArr)
+      setMenuList(rigthArr)
     })
   }, [])
 
@@ -144,17 +144,17 @@ function Menu() {
       <TabPane title="下单" className='order-content'>
         <View
           className='menu-left'>
-          {leftVal.map((item, index) =>
+          {menuList.map((item, index) =>
             <View
               key={index}
               className='menu-item'
-              style={{color: (item.index === leftCur) ? '#F24822' : '#919191'}}
-              onClick={() => handleLeftMenuClick(item.index)}>
-                {item.title}
+              style={{color: (index === leftCur) ? '#F24822' : '#919191'}}
+              onClick={() => handleLeftMenuClick(index)}>
+                {item.type}
             </View>)}
         </View>
         <View className='menu-right' ref={rightMenu}>
-            {rightVal.map((item, index) => <View key={index} className='goods-box'>
+            {menuList.map((item, index) => <View key={index} className='goods-box'>
                 <p>{item.type}</p>
                 <View>{item.arr.map((good, index1) => {
                   return <View key={index1} className='goods-item'>
