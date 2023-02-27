@@ -1,4 +1,10 @@
 .order-success-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .nut-image {
+    margin-top: 208px;
+  }
   .success-text {
     margin-top: 65.78px;
     font-family: 'Nunito';

@@ -5,13 +5,48 @@ import {useSelector, useDispatch} from 'react-redux'
 import './index.module.scss'
 import Taro from '@tarojs/taro';
 import Menu from './components/Menu/Index'
-
+import request from '../../utils/request/index'
+import APIPATH from '../../utils/request/config'
 function Index () {
-  console.log('rerender')
   const [showBottomRound, setShowBottomRound] = useState(false);
   const cartList = useSelector(state => state.cart.cartList)
   const allAmount = useSelector(state => state.cart.allAmount)
+  const [merchantInfo, setMerchantInfo] = useState<any>({})
+  const dispatch = useDispatch()
+  useEffect(() => {
+    // 匿名登陆
+    let token = Taro.getStorageSync('yummyh5-token')
+    if (!token) {
+      request({
+        url: APIPATH.getPassport,
+        method: 'post',
+        data: {}
+      }).then((res) => {
+        Taro.setStorage({
+          key:"yummyh5-token",
+          data: res.token
+        })
+        dispatch({type: 'USER_TOKEN_CHANGE', data: {token: res.token}})
+      })
+    } else {
+      dispatch({type: 'USER_TOKEN_CHANGE', data: {token: token}})
+    }
 
+    // 获取商户信息
+    request({
+      url: APIPATH.getMerchantInfo,
+      method: 'get'
+    }).then((res) => {
+      setMerchantInfo(res)
+    })
+  }, [])
+
+  const handleOrder = () => {
+    if (!cartList.length) {
+      return
+    }
+    Taro.navigateTo({url: 'pages/order/index'})
+  }
 
   return (
     <View className='index'>
@@ -20,10 +55,10 @@ function Index () {
           <View className='avatar'></View>
           <View className='info' onClick={() => setShowBottomRound(true)}>
             <View>
-              <Text className='text fs-38'>HAB|面包房</Text>
+              <Text className='text fs-38'>{merchantInfo.title}</Text>
             </View>
             <View>
-              <Text className='text fs-30'>温润落胃的日常面包</Text>
+              <Text className='text fs-30'>{merchantInfo.slogan}</Text>
             </View>
           </View>
         </View>
@@ -50,7 +85,7 @@ function Index () {
             </View>}
           <Text>合计 {allAmount}</Text>
         </View>
-        <View className='btn' onClick={() => Taro.navigateTo({url: 'pages/order/index'})}>
+        <View className='btn' onClick={() => handleOrder()}>
               Order now
         </View>
       </View>
@@ -61,8 +96,8 @@ function Index () {
             width={Taro.pxTransform(120)}
             height={Taro.pxTransform(120)}>
           </Image>
-          <Text className='name'>HAB|面包房</Text>
-          <p className='desc'>温润落胃的日常面包</p>
+          <Text className='name'>{merchantInfo.title}</Text>
+          <p className='desc'>{merchantInfo.slogan}</p>
           <Divider className='divider'/>
           <View className='content'>
             <Icon name="my"></Icon>

@@ -7,11 +7,14 @@ const request_data = {
 
 };
 
-export default (options = {
-  url: '',
-  method: 'GET',
-  data: {}
-}) => {
+type options = {
+  url: string,
+  method: string,
+  data?: Object,
+  header?: Object
+}
+
+export default (options:options) => {
   return Taro.request({
     url: baseUrl + options.url,
     data: {
@@ -20,6 +23,7 @@ export default (options = {
     },
     header: {
       'Content-Type': 'application/json',
+      ...options.header
     },
     method: (options.method as any).toUpperCase(),
   }).then(res => {

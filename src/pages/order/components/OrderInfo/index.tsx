@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Taro from '@tarojs/taro';
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
 import { Image, Input  } from '@nutui/nutui-react';
 import APIPATH from '../../../../utils/request/config'
 import './index.module.scss'
@@ -23,9 +23,6 @@ export default function index() {
     }
   ]
 
-  useEffect(() => {
-    console.log(cartList)
-  })
   return (
     <div className='order-info-container'>
       <p className='goods-count'>共2件商品</p>

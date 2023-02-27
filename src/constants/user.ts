@@ -1,0 +1,1 @@
+export const USER_TOKEN_CHANGE = 'USER_TOKEN_CHANGE'
