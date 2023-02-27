@@ -12,6 +12,8 @@
   .goods-list {
     display: flex;
     flex-direction: column;
+    height: 400px;
+    overflow: scroll;
     margin-top: 53px;
     .goods-item {
       display: flex;

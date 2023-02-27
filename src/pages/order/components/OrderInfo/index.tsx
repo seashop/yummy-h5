@@ -36,7 +36,7 @@ export default function index() {
             ></Image>
             <p className='good-name'>{item.title}</p>
             <p className='good-count'>x{item.count}</p>
-            <p className='good-amount'>{item.price}</p>
+            <p className='good-amount'>{item.price.toFixed(2)}</p>
           </div>
         })}
       </div>
