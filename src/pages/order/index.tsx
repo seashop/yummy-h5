@@ -1,46 +1,52 @@
-import React from 'react'
-import Taro from '@tarojs/taro';
-import TakeWay from './components/TakeWay/index'
-import {useSelector} from 'react-redux'
-import { View, Text } from '@tarojs/components'
-import OrderInfo from './components/OrderInfo/index'
-import request from '../../utils/request'
-import APIPATH from '../../utils/request/config'
-import useUserToken from '../../hooks/useUserToken'
-import './index.module.scss'
+import React from "react";
+import Taro from "@tarojs/taro";
+import TakeWay from "./components/TakeWay/index";
+import { useSelector } from "react-redux";
+import { View, Text } from "@tarojs/components";
+import OrderInfo from "./components/OrderInfo/index";
+import request from "../../utils/request";
+import APIPATH from "../../utils/request/config";
+import useUserToken from "../../hooks/useUserToken";
+import "./index.module.scss";
 export default function index() {
-  const allAmount = useSelector(state => state.cart.allAmount)
-  const cartList = useSelector(state => state.cart.cartList)
-  const userToken = useUserToken()
+  const allAmount = useSelector((state) => state.cart.allAmount);
+  const cartList = useSelector((state) => state.cart.cartList);
+  const userToken = useUserToken();
   const handlePay = () => {
     request({
       url: APIPATH.createOrder,
-      method: 'post',
+      method: "post",
       header: {
-        Authorization: 'Bearer ' + userToken
+        Authorization: "Bearer " + userToken,
       },
       data: {
         products: cartList.map((item) => {
           return {
             productId: item.id,
-            quantity: +item.count
-          }
-        })
-      }
+            quantity: +item.count,
+          };
+        }),
+      },
     }).then((res) => {
-      Taro.navigateTo({url: `pages/orderSuccess/index?orderId=${res.order.id}`})
-    })
-  }
+      console.log(res.order.id);
+      Taro.redirectTo({
+        url: `/pages/orderSuccess/index?orderId=${res.order.id}`,
+      });
+    });
+  };
   return (
-    <div className='order-cotainer'>
-      <TakeWay/>
-      <OrderInfo/>
-      <div className='bottom'>
+    <View className="order-cotainer">
+      <TakeWay />
+      <OrderInfo />
+      <View className="bottom">
         <View>
-          <span>合计</span><span className='total-price'>{allAmount}</span>
+          <Text>合计</Text>
+          <Text className="total-price">{allAmount}</Text>
         </View>
-        <p className='pay-button' onClick={() => handlePay()}>Pay now</p>
-      </div>
-    </div>
-  )
+        <View className="pay-button" onClick={() => handlePay()}>
+          Pay now
+        </View>
+      </View>
+    </View>
+  );
 }

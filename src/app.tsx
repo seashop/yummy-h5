@@ -2,7 +2,7 @@ import { Component, PropsWithChildren } from 'react'
 import { Provider } from 'react-redux'
 import '@nutui/nutui-react/dist/style.css'
 import configStore from './store'
-
+import 'taro-ui/dist/style/index.scss'
 import './app.scss'
 import './assets/css/global.scss'
 

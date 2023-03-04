@@ -12,7 +12,7 @@
   .goods-list {
     display: flex;
     flex-direction: column;
-    height: 400px;
+    max-height: 400px;
     overflow: scroll;
     margin-top: 53px;
     .goods-item {
@@ -58,24 +58,16 @@
     font-weight: 700;
   }
   .extra-text {
+    box-sizing: border-box;
+    padding: 26px;
     margin-top: 60px;
-    .nut-input {
-      background: #F5F5F5;
-      &::-webkit-input-placeholder {
-        color: red;
-      }
-      .nut-input-label  {
-        width: 60px !important;
-        .label-string {
-          color: #000000;
-          width: 60px;
-          font-family: 'Nunito';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 30px;
-          line-height: 154.4%;
-        }
-      }
+    background: #F5F5F5;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .text {
+      margin-right: 10px;
     }
   }
 }

@@ -49,6 +49,7 @@ const config = {
   h5: {
     publicPath: '/yummy-h5/',
     staticDirectory: 'static',
+    esnextModules: ['taro-ui'],
     postcss: {
       autoprefixer: {
         enable: true,

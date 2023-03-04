@@ -1,7 +1,8 @@
 .order-cotainer {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   padding: 0 29px;
+  box-sizing: border-box;
   background-color: #F5F5F5;
   .bottom {
     position: fixed;
