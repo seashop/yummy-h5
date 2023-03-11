@@ -1,13 +1,13 @@
-import { View, Text } from "@tarojs/components";
-import { useState, useRef, useEffect } from "react";
-import { AtFloatLayout, AtIcon, AtDivider } from "taro-ui";
-import { Image } from "@tarojs/components";
-import { useSelector, useDispatch } from "react-redux";
-import "./index.module.scss";
-import Taro from "@tarojs/taro";
-import Menu from "./components/Menu/Index";
-import request from "../../utils/request/index";
-import APIPATH from "../../utils/request/config";
+import { View, Text } from '@tarojs/components';
+import { useState, useRef, useEffect } from 'react';
+import { AtFloatLayout, AtIcon, AtDivider } from 'taro-ui';
+import { Image } from '@tarojs/components';
+import { useSelector, useDispatch } from 'react-redux';
+import './index.module.scss';
+import Taro from '@tarojs/taro';
+import Menu from './components/Menu/Index';
+import request from '../../utils/request/index';
+import APIPATH from '../../utils/request/config';
 function Index() {
   const [showBottomRound, setShowBottomRound] = useState(false);
   const cartList = useSelector((state) => state.cart.cartList);
@@ -15,30 +15,16 @@ function Index() {
   const [merchantInfo, setMerchantInfo] = useState<any>({});
   const dispatch = useDispatch();
   useEffect(() => {
-    // 匿名登陆
-    let token = Taro.getStorageSync("yummyh5-token");
-    console.log("--------------");
+    let token = Taro.getStorageSync('yummyh5-token');
     console.log(token);
     if (!token) {
-      request({
-        url: APIPATH.getPassport,
-        method: "post",
-        data: {},
-      }).then((res) => {
-        Taro.setStorage({
-          key: "yummyh5-token",
-          data: res.token,
-        });
-        dispatch({ type: "USER_TOKEN_CHANGE", data: { token: res.token } });
-      });
-    } else {
-      dispatch({ type: "USER_TOKEN_CHANGE", data: { token: token } });
+      Taro.navigateTo({ url: '/pages/login/index' });
     }
 
     // 获取商户信息
     request({
       url: APIPATH.getMerchantInfo,
-      method: "get",
+      method: 'get',
     }).then((res) => {
       setMerchantInfo(res);
     });
@@ -48,53 +34,48 @@ function Index() {
     if (!cartList.length) {
       return;
     }
-    Taro.navigateTo({ url: "/pages/order/index" });
+    Taro.navigateTo({ url: '/pages/order/index' });
   };
 
   return (
-    <View className="index">
-      <View className="index-bg">
-        <View className="bg-info">
-          <View className="avatar"></View>
-          <View className="info" onClick={() => setShowBottomRound(true)}>
+    <View className='index'>
+      <View className='index-bg'>
+        <View className='bg-info'>
+          <View className='avatar'></View>
+          <View className='info' onClick={() => setShowBottomRound(true)}>
             <View>
-              <Text className="text fs-38">{merchantInfo.title}</Text>
+              <Text className='text fs-38'>{merchantInfo.title}</Text>
             </View>
             <View>
-              <Text className="text fs-30">{merchantInfo.slogan}</Text>
+              <Text className='text fs-30'>{merchantInfo.slogan}</Text>
             </View>
           </View>
         </View>
         <View>
-          <View className="tip">
-            <Text>加老板微信成为会员，享优惠</Text>
+          <View className='tip'>
+            <Text>欢迎下单~</Text>
+            {/* <Text>加老板微信成为会员，享优惠</Text>
             <View className="btn">
               <Text>成为会员</Text>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>
       <Menu></Menu>
-      <View className="index-bottom">
-        <View className="cart">
+      <View className='index-bottom'>
+        <View className='cart'>
           <Image
-            className="image"
+            className='image'
             style={{
               width: Taro.pxTransform(60),
               height: Taro.pxTransform(60),
             }}
-            src={
-              cartList.length === 0
-                ? require("./assets/cart-empty.png")
-                : require("./assets/cart.png")
-            }
+            src={cartList.length === 0 ? require('./assets/cart-empty.png') : require('./assets/cart.png')}
           ></Image>
-          {cartList.length > 0 && (
-            <View className="cart-count">{cartList.length}</View>
-          )}
+          {cartList.length > 0 && <View className='cart-count'>{cartList.length}</View>}
           <Text>合计 {allAmount}</Text>
         </View>
-        <View className="btn" onClick={() => handleOrder()}>
+        <View className='btn' onClick={() => handleOrder()}>
           Order now
         </View>
       </View>
@@ -104,29 +85,29 @@ function Index() {
           setShowBottomRound(false);
         }}
       >
-        <View className="bottom-popup">
+        <View className='bottom-popup'>
           <Image
-            className="avatar"
+            className='avatar'
             style={{
               width: Taro.pxTransform(120),
               height: Taro.pxTransform(120),
             }}
-            src={require("./assets/cart.png")}
+            src={require('./assets/cart.png')}
           ></Image>
-          <Text className="name">{merchantInfo.title}</Text>
-          <Text className="desc">{merchantInfo.slogan}</Text>
-          <View className="content">
-            <AtIcon value="user" size="30"></AtIcon>
+          <Text className='name'>{merchantInfo.title}</Text>
+          <Text className='desc'>{merchantInfo.slogan}</Text>
+          <View className='content'>
+            <AtIcon value='user' size='30'></AtIcon>
             <Text>13333</Text>
           </View>
           <AtDivider></AtDivider>
-          <View className="content">
-            <AtIcon value="message" size="30"></AtIcon>
+          <View className='content'>
+            <AtIcon value='message' size='30'></AtIcon>
             <Text>13333</Text>
           </View>
           <AtDivider></AtDivider>
-          <View className="content">
-            <AtIcon value="home" size="30"></AtIcon>
+          <View className='content'>
+            <AtIcon value='home' size='30'></AtIcon>
             <Text>13333</Text>
           </View>
         </View>

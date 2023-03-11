@@ -1,0 +1,6 @@
+# .eslintignore
+/.git/
+/.vscode/
+node_modules/
+dist/
+src/index.html

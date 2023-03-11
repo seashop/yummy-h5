@@ -19,9 +19,10 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: space-between;
       margin-bottom: 15px;
       .good-name {
-        width: 258px;
+        flex: 1;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -35,7 +36,7 @@
         color: #000000;
       }
       .good-count {
-        margin-left: 44px;
+        width: 80px;
         font-family: 'Nunito';
         font-style: normal;
         font-weight: 500;
@@ -43,7 +44,8 @@
         color: #000000;
       }
       .good-amount {
-        margin-left: 48px;
+        width: 130px;
+        text-align: right;
         font-weight: 700;
       }
     }
