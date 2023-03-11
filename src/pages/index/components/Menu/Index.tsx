@@ -79,12 +79,6 @@ function Menu() {
   }
 
   useEffect(() => {
-    Taro.createSelectorQuery()
-      .select('.goods-box')
-      .boundingClientRect((res) => {
-        console.log(res); // 获取元素的offsetTop
-      })
-      .exec();
     let goodsBoxEls = document.getElementsByClassName('goods-box');
     let arr = [];
     for (let el of goodsBoxEls) {
