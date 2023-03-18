@@ -41,6 +41,7 @@
     "@tarojs/components": "3.5.11",
     "@tarojs/helper": "3.5.11",
     "@tarojs/plugin-framework-react": "3.5.11",
+    "@tarojs/plugin-html": "^3.6.2",
     "@tarojs/plugin-platform-alipay": "3.5.11",
     "@tarojs/plugin-platform-jd": "3.5.11",
     "@tarojs/plugin-platform-qq": "3.5.11",

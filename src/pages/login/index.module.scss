@@ -4,6 +4,12 @@
     margin-top: 100px;
     display: flex;
     justify-content: center;
+    position: relative;
+    .local-change {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
   .login-desc {
     display: flex;
@@ -24,9 +30,9 @@
       align-items: center;
       justify-content: space-between;
       .at-button {
-          height: 78px;
-          line-height: 78px;
-          margin: 0;
+        height: 78px;
+        line-height: 78px;
+        margin: 0;
       }
     }
   }
@@ -42,14 +48,64 @@
       border-radius: 110.478px;
     }
     .fake-login {
-      position: absolute;
-        width: 690px;
-        height: 90px;
-        line-height: 90px;
-        color: #fff;
-        text-align: center;
-        background: linear-gradient(0deg, rgba(22, 119, 255, 0.435) 8.33%, rgba(22, 119, 255, 0.5) 100%);
-        border-radius: 110.478px;
+      // position: absolute;
+      width: 690px;
+      height: 90px;
+      line-height: 90px;
+      color: #fff;
+      text-align: center;
+      background: linear-gradient(0deg, rgba(22, 119, 255, 0.435) 8.33%, rgba(22, 119, 255, 0.5) 100%);
+      border-radius: 110.478px;
+    }
+  }
+  .policy {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 53px;
+    font-size: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .radio {
+      width: 24px;
+      height: 24px;
+      background-color: white;
+      border: 3px solid #d9d9d9;
+      border-radius: 50%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .radioChild {
+      box-sizing: border-box;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+    }
+
+    .radioChecked {
+      border-color: #1a9eff;
+
+      .radioChild {
+        background-color: #1a9eff;
+      }
+    }
+
+    .radioText {
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      .span {
+        color: #1a9eff;
+      }
     }
   }
 }

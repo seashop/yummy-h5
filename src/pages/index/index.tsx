@@ -16,9 +16,8 @@ function Index() {
   const dispatch = useDispatch();
   useEffect(() => {
     let token = Taro.getStorageSync('yummyh5-token');
-    console.log(token);
     if (!token) {
-      Taro.navigateTo({ url: '/pages/login/index' });
+      Taro.redirectTo({ url: '/pages/login/index' });
     }
 
     // 获取商户信息

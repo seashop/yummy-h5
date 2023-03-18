@@ -66,7 +66,7 @@ function Menu() {
     setTimeout(() => {
       setLeftCur(type);
     }, 20);
-    rightMenu.current.scrollTop = goodsBoxOffsetHeightArr.current[type];
+    // rightMenu.current.scrollTop = goodsBoxOffsetHeightArr.current[type];
   }
 
   function handleCountChange(value, good) {
@@ -79,34 +79,34 @@ function Menu() {
   }
 
   useEffect(() => {
-    let goodsBoxEls = document.getElementsByClassName('goods-box');
-    let arr = [];
-    for (let el of goodsBoxEls) {
-      arr.push(el.offsetTop);
-      goodsBoxOffsetHeightArr.current = arr;
-      // setGoodsBoxOffsetHeightArr(arr)
-    }
+    // let goodsBoxEls = document.getElementsByClassName('goods-box');
+    // let arr = [];
+    // for (let el of goodsBoxEls) {
+    //   arr.push(el.offsetTop);
+    //   goodsBoxOffsetHeightArr.current = arr;
+    //   // setGoodsBoxOffsetHeightArr(arr)
+    // }
   });
 
   useEffect(() => {
-    rightMenu.current.addEventListener('scroll', () => {
-      let scrollTop = rightMenu.current.scrollTop;
-      let arr = goodsBoxOffsetHeightArr.current;
-      let curIndex = 0;
-      // 与左侧联动
-      for (let i = 1; i < arr.length; i++) {
-        if (i - 1 >= 0 && arr[i - 1] < scrollTop && arr[i] > scrollTop) {
-          curIndex = i - 1;
-          // setLeftCur(i-1)
-        } else if (scrollTop > arr[arr.length - 1]) {
-          curIndex = arr.length - 1;
-          // setLeftCur(arr.length - 1)
-        }
-      }
-      setLeftCur(curIndex);
-    });
+    // rightMenu.current.addEventListener('scroll', () => {
+    //   let scrollTop = rightMenu.current.scrollTop;
+    //   let arr = goodsBoxOffsetHeightArr.current;
+    //   let curIndex = 0;
+    //   // 与左侧联动
+    //   for (let i = 1; i < arr.length; i++) {
+    //     if (i - 1 >= 0 && arr[i - 1] < scrollTop && arr[i] > scrollTop) {
+    //       curIndex = i - 1;
+    //       // setLeftCur(i-1)
+    //     } else if (scrollTop > arr[arr.length - 1]) {
+    //       curIndex = arr.length - 1;
+    //       // setLeftCur(arr.length - 1)
+    //     }
+    //   }
+    //   setLeftCur(curIndex);
+    // });
     return () => {
-      rightMenu.current.removeEventListener('scroll', () => {});
+      // rightMenu.current.removeEventListener('scroll', () => {});
     };
   }, []);
 
