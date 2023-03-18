@@ -82,27 +82,6 @@ export default function index() {
       });
   };
   const handleFakeLogin = () => {
-    // 匿名登陆
-    let token = Taro.getStorageSync('yummyh5-token');
-    if (!token) {
-      request({
-        url: APIPATH.getPassport,
-        method: 'post',
-        data: {},
-      }).then((res) => {
-        Taro.setStorage({
-          key: 'yummyh5-token',
-          data: res.token,
-        });
-        dispatch({ type: 'USER_TOKEN_CHANGE', data: { token: res.token } });
-        Taro.navigateTo({ url: '/pages/index/index' });
-      });
-    } else {
-      dispatch({ type: 'USER_TOKEN_CHANGE', data: { token: token } });
-      Taro.navigateTo({ url: '/pages/index/index' });
-    }
-  };
-  useEffect(() => {
     Taro.login({
       success(res) {
         console.log(res);
@@ -114,30 +93,76 @@ export default function index() {
             code: res.code,
             auto_signup: true,
           },
-        });
+        })
+          .then((result) => {
+            Taro.setStorage({
+              key: 'yummyh5-token',
+              data: result.token,
+            });
+            dispatch({ type: 'USER_TOKEN_CHANGE', data: { token: result.token } });
+            Taro.navigateTo({ url: '/pages/index/index' });
+          })
+          .catch(() => {});
       },
     });
-  }, []);
+    // 匿名登陆
+    // let token = Taro.getStorageSync('yummyh5-token');
+    // if (!token) {
+    //   request({
+    //     url: APIPATH.getPassport,
+    //     method: 'post',
+    //     data: {},
+    //   }).then((res) => {
+    //     Taro.setStorage({
+    //       key: 'yummyh5-token',
+    //       data: res.token,
+    //     });
+    //     dispatch({ type: 'USER_TOKEN_CHANGE', data: { token: res.token } });
+    //     Taro.navigateTo({ url: '/pages/index/index' });
+    //   });
+    // } else {
+    //   dispatch({ type: 'USER_TOKEN_CHANGE', data: { token: token } });
+    //   Taro.navigateTo({ url: '/pages/index/index' });
+    // }
+  };
   const handleChecked = () => {
     setChecked(!checked);
   };
-  const getPhoneNumber = (e) => {
+  const getPhoneNumber = async (e) => {
     console.log(e.detail.code);
     Taro.login({
-      success(res) {
+      async success(res) {
         console.log(res);
-        request({
+        const customToken = await request({
           url: APIPATH.passport,
           method: 'post',
-          header: {
-            Authorization: 'Bearer ' + res.code,
-          },
           data: {
-            provider: 'PROVIDER_WECHAT_MINIPROGRAM_PHONE',
-            code: e.detail.code,
+            provider: 'PROVIDER_WECHAT_MINIPROGRAM',
+            code: res.code,
             auto_signup: true,
           },
         });
+        if (customToken.token) {
+          request({
+            url: APIPATH.passport,
+            method: 'post',
+            header: {
+              Authorization: 'Bearer ' + customToken.token.access,
+            },
+            data: {
+              provider: 'PROVIDER_WECHAT_MINIPROGRAM_PHONE',
+              code: e.detail.code,
+              auto_signup: true,
+            },
+          }).then((result) => {
+            Taro.setStorage({
+              key: 'yummyh5-token',
+              data: result.token,
+            });
+            dispatch({ type: 'USER_TOKEN_CHANGE', data: { token: result.token } });
+            Taro.navigateTo({ url: '/pages/index/index' });
+          });
+        }
       },
     });
   };
