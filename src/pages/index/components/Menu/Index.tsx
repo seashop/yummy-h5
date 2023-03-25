@@ -1,22 +1,25 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, ScrollView } from '@tarojs/components';
 import { Image } from '@tarojs/components';
-import { usePageScroll } from '@tarojs/taro';
 import { AtTabs, AtTabsPane } from 'taro-ui';
 import Taro from '@tarojs/taro';
 import InputNumber from './components/input-number/index';
 import request from '../../../../utils/request';
 import APIPATH from '../../../../utils/request/config';
+import LanguageContext from '../../../../context/language-context';
 import './index.module.scss';
-function Menu() {
+function Menu(props) {
   const [tab1value, setTab1value] = useState<number>(0);
-  const [leftCur, setLeftCur] = useState<number>(0);
-  const goodsBoxOffsetHeightArr = useRef([]);
-  const [leftVal, setLeftVal] = useState([]);
+  const [leftCur, setLeftCur] = useState<number>(1);
+  const [contentTop, setContentTop] = useState<number[]>([]);
+  const [scrollTop, setScrollTop] = useState<number>(0);
+  const [isSettingScroll, setIsSettingScroll] = useState<boolean>(false);
+  const { messages } = useContext(LanguageContext);
   const [menuList, setMenuList] = useState([]);
   const dispatch = useDispatch();
   const rightMenu = useRef(null);
+  const query = Taro.createSelectorQuery();
   useEffect(() => {
     request({
       url: APIPATH.getProductList,
@@ -33,12 +36,65 @@ function Menu() {
           map[catTitle] = [item];
         }
       });
-      Object.entries(map).forEach(([key, value]) => {
+      Object.entries(map).forEach(([key, value], index) => {
         rigthArr.push({ type: key, arr: value });
+        query.select('#goods-box' + index).boundingClientRect();
       });
       setMenuList(rigthArr);
+      query.selectViewport().scrollOffset();
+      setTimeout(() => {
+        query.exec((resQuery) => {
+          let tops: any = [];
+          let fristTop: number = 0;
+          console.log(resQuery);
+          resQuery.map((item, i) => {
+            if (i < rigthArr.length) {
+              if (i == 0) {
+                fristTop = item.top;
+                tops.push(0);
+              } else {
+                tops.push(parseInt((item.top - fristTop).toString()));
+              }
+            }
+          });
+          setContentTop(tops);
+        });
+      }, 500);
     });
   }, []);
+
+  const handleScroll = (e) => {
+    if (!isSettingScroll) {
+      // 处理滚动逻辑
+      let scrollTop = e.detail.scrollTop;
+      if (scrollTop >= 200) {
+        props.setIsNeedExtend(1);
+      } else {
+        props.setIsNeedExtend(0);
+      }
+      if (contentTop.length > 1) {
+        let index = 1;
+        for (let i = 1; index < contentTop.length; i++) {
+          if (scrollTop >= contentTop[i - 1] && scrollTop < contentTop[i]) {
+            index = i;
+            break;
+          }
+        }
+        if (leftCur != index) {
+          setLeftCur(index);
+        }
+      }
+    }
+  };
+
+  const setScroll = (index) => {
+    setIsSettingScroll(true);
+    setLeftCur(index + 1);
+    setScrollTop(+contentTop[index]);
+    setTimeout(() => {
+      setIsSettingScroll(false);
+    }, 500);
+  };
 
   let messageList = [
     {
@@ -70,57 +126,27 @@ function Menu() {
   }
 
   function handleCountChange(value, good) {
-    console.log(value, good);
     dispatch({ type: 'CART_LIST_CHANGE', data: { value, good } });
   }
 
   function handleChangeTab(paneKey) {
     setTab1value(paneKey);
   }
-
-  useEffect(() => {
-    // let goodsBoxEls = document.getElementsByClassName('goods-box');
-    // let arr = [];
-    // for (let el of goodsBoxEls) {
-    //   arr.push(el.offsetTop);
-    //   goodsBoxOffsetHeightArr.current = arr;
-    //   // setGoodsBoxOffsetHeightArr(arr)
-    // }
-  });
-
-  useEffect(() => {
-    // rightMenu.current.addEventListener('scroll', () => {
-    //   let scrollTop = rightMenu.current.scrollTop;
-    //   let arr = goodsBoxOffsetHeightArr.current;
-    //   let curIndex = 0;
-    //   // 与左侧联动
-    //   for (let i = 1; i < arr.length; i++) {
-    //     if (i - 1 >= 0 && arr[i - 1] < scrollTop && arr[i] > scrollTop) {
-    //       curIndex = i - 1;
-    //       // setLeftCur(i-1)
-    //     } else if (scrollTop > arr[arr.length - 1]) {
-    //       curIndex = arr.length - 1;
-    //       // setLeftCur(arr.length - 1)
-    //     }
-    //   }
-    //   setLeftCur(curIndex);
-    // });
-    return () => {
-      // rightMenu.current.removeEventListener('scroll', () => {});
-    };
-  }, []);
-
+  const tabList = [
+    // { title: messages.dynamic },
+    { title: messages.placeAnOrder },
+  ];
   return (
     <View className='index-content'>
       <AtTabs
         animated={false}
         current={tab1value}
-        tabList={[{ title: '动态' }, { title: '下单' }]}
+        tabList={tabList}
         onClick={(paneKey) => {
           handleChangeTab(paneKey);
         }}
       >
-        <AtTabsPane current={tab1value} className='shop-message' index={0}>
+        {/* <AtTabsPane current={tab1value} className='shop-message' index={0}>
           <View className='message-box'>
             {messageList.map((item, index) => {
               return (
@@ -145,24 +171,27 @@ function Menu() {
               );
             })}
           </View>
-        </AtTabsPane>
-        <AtTabsPane current={tab1value} index={1}>
-          <View className='order-content'>
+        </AtTabsPane> */}
+        <AtTabsPane current={tab1value} index={0}>
+          {/* props.isNeedExtend */}
+          <View className={`${props.isNeedExtend ? 'order-content isExtend' : 'order-content'}`}>
             <ScrollView className='menu-left'>
               {menuList.map((item, index) => (
                 <View
                   key={index}
                   className='menu-item'
-                  style={{ color: index === leftCur ? '#F24822' : '#919191' }}
-                  onClick={() => handleLeftMenuClick(index)}
+                  style={{ color: index + 1 === leftCur ? '#F24822' : '#919191' }}
+                  onClick={() => {
+                    setScroll(index);
+                  }}
                 >
                   {item.type}
                 </View>
               ))}
             </ScrollView>
-            <ScrollView className='menu-right' ref={rightMenu}>
+            <ScrollView className='menu-right' ref={rightMenu} onScroll={handleScroll} scrollTop={scrollTop} scrollY={true}>
               {menuList.map((item, index) => (
-                <View key={index} className='goods-box'>
+                <View key={index} className='goods-box' id={`goods-box` + index}>
                   <Text>{item.type}</Text>
                   <View>
                     {item.arr.map((good, index1) => {

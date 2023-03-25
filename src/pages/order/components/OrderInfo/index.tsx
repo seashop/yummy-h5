@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Taro from '@tarojs/taro';
 import { View, Text, Image, Input } from '@tarojs/components';
 import { useSelector } from 'react-redux';
+import LanguageContext from '../../../../context/language-context';
 import APIPATH from '../../../../utils/request/config';
 import './index.module.scss';
 export default function index() {
   const cartList = useSelector((state) => state.cart.cartList);
   const allAmount = useSelector((state) => state.cart.allAmount);
+  const { language, messages } = useContext(LanguageContext);
   const [extraText, UpdateExtraText] = useState('');
   const arr: any = [
     {
@@ -25,7 +27,7 @@ export default function index() {
 
   return (
     <View className='order-info-container'>
-      <Text className='goods-count'>共2件商品</Text>
+      <Text className='goods-count'>{language === 'cn' ? `共${cartList.length}件商品` : `${cartList.length} items in total`}</Text>
       <View className='goods-list'>
         {cartList.map((item, index) => {
           return (
@@ -44,10 +46,13 @@ export default function index() {
           );
         })}
       </View>
-      <View className='goods-amount'>合计{allAmount}</View>
+      <View className='goods-amount'>
+        {messages.total}
+        {allAmount}
+      </View>
       <View className='extra-text'>
-        <Text className='text'>备注</Text>
-        <Input type='text' placeholder='（选填）可填写无接触配送等信息' />
+        <Text className='text'>{messages.notes}</Text>
+        <Input type='text' placeholder={messages.Optional} />
       </View>
     </View>
   );

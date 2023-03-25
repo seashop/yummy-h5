@@ -6,7 +6,7 @@
     overflow: scroll;
     height: calc(100vh - 500px - 92px - 100px);
     .message-item {
-      border-bottom: 2px solid #ECECEC;
+      border-bottom: 2px solid #ececec;
       padding: 35px 0;
       &:first-of-type {
         padding: 0;
@@ -19,23 +19,23 @@
         line-height: 56px;
         color: #000000;
         margin-bottom: 36px;
-    }
-    .img-box {
-      display: flex;
-      flex-wrap: wrap;
-      margin-bottom: 36px;
-      > div {
-        margin-right: 30px;
       }
-    }
-    .date {
-      font-family: 'Nunito';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 30px;
-      line-height: 46px;
-      color: #818181;
-    }
+      .img-box {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 36px;
+        > div {
+          margin-right: 30px;
+        }
+      }
+      .date {
+        font-family: 'Nunito';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 46px;
+        color: #818181;
+      }
     }
   }
   .order-content {
@@ -43,8 +43,11 @@
     display: flex;
     flex-direction: row;
     overflow: scroll;
-    background: #F7F7F7;
-    height: calc(100vh - 500px - 92px - 100px);
+    background: #f7f7f7;
+    height: calc(100vh - 692px);
+    &.isExtend {
+      height: calc(100vh - 492px);
+    }
   }
   .menu-left {
     width: 200px;
@@ -52,7 +55,7 @@
     height: 100%;
     flex-direction: column;
     text-align: center;
-    border-right: 2px solid #ECECEC;
+    border-right: 2px solid #ececec;
     overflow: scroll;
     .menu-item {
       height: 100px;
@@ -91,7 +94,7 @@
           align-items: center;
           justify-content: space-between;
           .good-amnout {
-            color: #FF0202;
+            color: #ff0202;
             font-size: 35px;
             width: 90px;
           }

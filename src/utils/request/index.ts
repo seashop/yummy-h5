@@ -15,7 +15,8 @@ type options = {
 }
 
 export default (options:options) => {
-  return Taro.request({
+  return new Promise((resolve,reject) => {
+    Taro.request({
     url: baseUrl + options.url,
     data: {
       ...request_data,
@@ -39,9 +40,12 @@ export default (options:options) => {
       //     mask: true,
       //   });
       // }
-      return data;
+      resolve(data);
     } else {
-      throw new Error(`网络请求错误，状态码${statusCode}`);
+      reject(data)
     }
-  });
+  }).catch((err) => {
+    return err
+  })
+  })
 };
