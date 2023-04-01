@@ -20,10 +20,17 @@ export default {
     selfPickUp: '自提',
     confrimInStore: '请确认你已在店内',
     notes: '备注',
-    Optional: '（选填）可填写无接触配送等信息',
+    Optional: '（选填）',
     goToPay: '去支付',
     orderSuccess: '下单成功',
     preparing: '商家备餐中，请稍等…',
-    orderTime: '下单时间'
+    orderTime: '下单时间',
+    sendOrderToMail: '发送订单至邮箱',
+    confirmSendOrderToMail: '订单将发送至邮箱',
+    sendOrderToMailToast: '订单信息已发送，请查收邮件',
+    confirm: '确认',
+    cancle: '取消',
+    login: '登陆',
+    plaseLoginWithMail: '请使用电子邮箱登陆',
   }
 }

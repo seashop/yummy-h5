@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Taro from '@tarojs/taro';
 import TakeWay from './components/TakeWay/index';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { View, Text } from '@tarojs/components';
 import OrderInfo from './components/OrderInfo/index';
 import request from '../../utils/request';
@@ -14,6 +14,7 @@ export default function index() {
   const cartList = useSelector((state) => state.cart.cartList);
   const userToken = useUserToken();
   const { messages } = useContext(LanguageContext);
+  const dispatch = useDispatch();
   const handlePay = () => {
     request({
       url: APIPATH.createOrder,
@@ -30,10 +31,10 @@ export default function index() {
         }),
       },
     }).then((res) => {
-      console.log(res.order.id);
       Taro.redirectTo({
         url: `/pages/orderSuccess/index?orderId=${res.order.id}`,
       });
+      dispatch({ type: 'CART_CLEAR' });
     });
   };
   return (
@@ -42,7 +43,7 @@ export default function index() {
       <OrderInfo />
       <View className='bottom'>
         <View>
-          <Text>{messages.total}</Text>
+          <Text>{messages.total}</Text>&nbsp;
           <Text className='total-price'>{allAmount}</Text>
         </View>
         <View className='pay-button' onClick={() => handlePay()}>

@@ -29,7 +29,6 @@
             margin-right: 18.8px;
           }
           .item-text {
-            font-family: 'Nunito';
             font-style: normal;
             font-weight: 400;
             font-size: 24px;
@@ -129,9 +128,9 @@
 
     .radioText {
       margin-left: 10px;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
+      // display: flex;
+      // align-items: center;
+      // flex-direction: row;
       .span {
         color: #1a9eff;
       }

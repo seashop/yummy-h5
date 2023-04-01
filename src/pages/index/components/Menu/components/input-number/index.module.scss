@@ -1,14 +1,15 @@
-@import "~taro-ui/dist/style/components/icon.scss";
+@import '~taro-ui/dist/style/components/icon.scss';
 .input-number {
   display: flex;
   flex-direction: row;
   align-items: center;
-  .at-icon-add, .at-icon-subtract {
+  .at-icon-add,
+  .at-icon-subtract {
     border: 2.22456px solid #000000;
     border-radius: 6.67367px;
   }
   .count {
-    width: 80px;
+    width: 60px;
     text-align: center;
   }
 }

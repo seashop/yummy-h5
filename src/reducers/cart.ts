@@ -1,4 +1,4 @@
-import { CART_LIST_CHANGE } from '../constants/cart'
+import { CART_LIST_CHANGE, CART_CLEAR } from '../constants/cart'
 
 
 
@@ -27,6 +27,12 @@ export default function cart (state = INITIAL_STATE, action) {
         allAmount: state.cartList.reduce((prev, next) => {
           return prev + next.price * + next.count
         }, 0).toFixed(2)
+      }
+    case CART_CLEAR:
+      return {
+        ...state,
+        cartList: [],
+        allAmount: 0
       }
      default:
        return state

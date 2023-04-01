@@ -4,7 +4,10 @@
     background: #fff;
     padding: 36px 29px;
     overflow: scroll;
-    height: calc(100vh - 500px - 92px - 100px);
+    height: calc(100vh - 692px);
+    &.isExtend {
+      height: calc(100vh - 292px);
+    }
     .message-item {
       border-bottom: 2px solid #ececec;
       padding: 35px 0;
@@ -12,7 +15,6 @@
         padding: 0;
       }
       .message-text {
-        font-family: 'Nunito';
         font-style: normal;
         font-weight: 500;
         font-size: 36px;
@@ -29,7 +31,6 @@
         }
       }
       .date {
-        font-family: 'Nunito';
         font-style: normal;
         font-weight: 400;
         font-size: 30px;
@@ -46,7 +47,7 @@
     background: #f7f7f7;
     height: calc(100vh - 692px);
     &.isExtend {
-      height: calc(100vh - 492px);
+      height: calc(100vh - 292px);
     }
   }
   .menu-left {

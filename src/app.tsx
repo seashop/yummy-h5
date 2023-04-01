@@ -1,5 +1,6 @@
 import { Component, PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
+import Taro from '@tarojs/taro';
 import '@nutui/nutui-react/dist/style.css';
 import configStore from './store';
 import 'taro-ui/dist/style/index.scss';
@@ -13,8 +14,8 @@ class App extends Component<PropsWithChildren> {
   constructor(props) {
     super(props);
     this.state = {
-      language: 'en',
-      messages: LanguageList['en'],
+      language: 'cn',
+      messages: LanguageList['cn'],
     };
   }
   setLanguage(language) {
@@ -24,7 +25,12 @@ class App extends Component<PropsWithChildren> {
     });
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    Taro.setStorage({
+      key: 'isShowGetPhone',
+      data: 0,
+    });
+  }
 
   componentDidShow() {}
 

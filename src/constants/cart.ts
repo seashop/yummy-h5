@@ -1,1 +1,2 @@
 export const CART_LIST_CHANGE = 'CART_LIST_CHANGE'
+export const CART_CLEAR = 'CART_CLEAR'

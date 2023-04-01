@@ -6,7 +6,6 @@ import APIPATH from '../utils/request//config';
 
 
 const currentPage = Taro.getCurrentPages().pop();
-console.log(currentPage)
 export default function useSetToken() {
 
   const dispatch = useDispatch();

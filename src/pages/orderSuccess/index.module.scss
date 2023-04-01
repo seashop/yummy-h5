@@ -2,16 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 208px;
+  margin-top: 180px;
   .success-text {
     margin-top: 65.78px;
-    font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
     font-size: 64px;
     line-height: 87px;
     text-align: center;
-    color: #32B768;
+    color: #32b768;
   }
   .wait-text {
     font-family: 'PingFang SC';
@@ -25,7 +24,6 @@
   }
   .order-num {
     margin-top: 202px;
-    font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
     font-size: 65px;
@@ -35,7 +33,6 @@
   }
   .order-amount {
     margin-top: 31px;
-    font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
     font-size: 36px;
@@ -45,12 +42,29 @@
   }
   .order-time {
     margin-top: 48px;
-    font-family: 'Nunito';
     font-style: normal;
     font-weight: 400;
     font-size: 30px;
     line-height: 41px;
     text-align: center;
     color: #000000;
+  }
+  .send-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 690px;
+    height: 78px;
+    margin-top: 180px;
+    background: rgba(22, 119, 255, 0.8);
+    border-radius: 15px;
+    color: #ffffff;
+  }
+  .send-mail-dialog {
+    .at-modal__content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }

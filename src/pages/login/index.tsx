@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { View, Text, Image, Button } from '@tarojs/components';
-import { AtInput, AtButton, AtDivider, AtToast, AtCheckbox } from 'taro-ui';
+import { AtInput, AtButton, AtDivider, AtToast, AtCheckbox, AtFloatLayout } from 'taro-ui';
 import Taro, { getCurrentInstance } from '@tarojs/taro';
 import { useSelector, useDispatch } from 'react-redux';
 import CountDown from './components/count-down/index';
@@ -23,10 +23,12 @@ export default function index() {
   const [isRecevingCode, setIsRecevingCode] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [checked, setChecked] = useState(false);
+  const [isOpenPolicy, setIsOpenPolicy] = useState(false);
   const [isShowSelectLanuage, setIsShowSelectLanuage] = useState(false);
   const { data, loginFn: skipLoginFn } = useSetToken();
   const { messages, setLanguage } = useContext(LanguageContext);
   const dispatch = useDispatch();
+  const pageFrom = getCurrentInstance().router.params.from;
   const handleMailChange = (value) => {
     setMail(value);
   };
@@ -79,8 +81,16 @@ export default function index() {
           key: 'yummyh5-token',
           data: res.token,
         });
+        Taro.setStorage({
+          key: 'login-email',
+          data: mail,
+        });
         dispatch({ type: 'USER_TOKEN_CHANGE', data: { token: res.token } });
-        Taro.navigateTo({ url: '/pages/index/index' });
+        if (getCurrentInstance().router.params.from) {
+          Taro.navigateBack();
+        } else {
+          Taro.navigateTo({ url: '/pages/index/index' });
+        }
       })
       .catch((err) => {
         setErrorText(err.message);
@@ -175,27 +185,36 @@ export default function index() {
         >
           {messages.login}
         </View>
-        <AtDivider content='or' fontColor='#C4C4C4' lineColor='#C4C4C4' />
-        <View className='fake-login' onClick={handleSkipLogin}>
-          {messages.skipLogin}
-        </View>
+        {pageFrom === 'orderSuccess' ? (
+          ''
+        ) : (
+          <>
+            <AtDivider content='or' fontColor='#C4C4C4' lineColor='#C4C4C4' />
+            <View className='fake-login' onClick={handleSkipLogin}>
+              {messages.skipLogin}
+            </View>
+          </>
+        )}
       </View>
       <View className='policy'>
         <View className={`radio ${checked ? 'radioChecked' : ''}`} onClick={handleChecked}>
           <View className='radioChild'></View>
         </View>
         <View className='radioText'>
-          <Text style={{ width: Taro.pxTransform(170) }}>{messages.agree}</Text>
-          <Text className='span' style={{ width: Taro.pxTransform(220) }}>
+          <Text>{messages.agree}</Text>
+          <Text className='span' onClick={() => setIsOpenPolicy(true)}>
             《Privacy Policy》
           </Text>
           <Text>和</Text>
-          <Text className='span' style={{ width: Taro.pxTransform(220) }}>
-            《Terms & Conditions》
-          </Text>
+          <Text className='span'>《Terms & Conditions》</Text>
         </View>
       </View>
       <AtToast isOpened={isOpenModal} text={errorText} onClose={() => setIsOpenModal(false)}></AtToast>
+      <AtFloatLayout isOpened={isOpenPolicy} onClose={() => setIsOpenPolicy(false)}>
+        <View>
+          <View></View>
+        </View>
+      </AtFloatLayout>
     </View>
   );
 }

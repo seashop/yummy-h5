@@ -47,7 +47,7 @@ export default function index() {
         })}
       </View>
       <View className='goods-amount'>
-        {messages.total}
+        {messages.total}&nbsp;
         {allAmount}
       </View>
       <View className='extra-text'>

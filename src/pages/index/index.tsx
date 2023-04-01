@@ -1,7 +1,8 @@
-import { View, Text } from '@tarojs/components';
+import { View, Text, Button } from '@tarojs/components';
 import { useState, useEffect, useContext } from 'react';
-import { AtFloatLayout, AtIcon, AtDivider } from 'taro-ui';
+import { AtFloatLayout, AtIcon, AtDivider, AtModal, AtButton } from 'taro-ui';
 import { Image } from '@tarojs/components';
+import useUserToken from '../../hooks/useUserToken';
 import { useSelector, useDispatch } from 'react-redux';
 import './index.module.scss';
 import Taro from '@tarojs/taro';
@@ -17,12 +18,21 @@ function Index() {
   const allAmount = useSelector((state) => state.cart.allAmount);
   const [merchantInfo, setMerchantInfo] = useState<any>({});
   const [isNeedExtend, setIsNeedExtend] = useState<number>(0);
+  const userToken = useUserToken();
+  const [isShowGetPhoneModal, setIsShowGetPhoneModal] = useState(false);
   const { data, loginFn: wxLoginFn } = useSetToken();
   const { messages } = useContext(LanguageContext);
   const dispatch = useDispatch();
 
   useEffect(() => {
     let token = Taro.getStorageSync('yummyh5-token');
+    // 获取商户信息
+    request({
+      url: APIPATH.getMerchantInfo,
+      method: 'get',
+    }).then((res) => {
+      setMerchantInfo(res);
+    });
     if (curEnv === Taro.ENV_TYPE.WEB) {
       if (!token) {
         Taro.redirectTo({ url: '/pages/login/index' });
@@ -37,14 +47,6 @@ function Index() {
         },
       });
     }
-
-    // 获取商户信息
-    request({
-      url: APIPATH.getMerchantInfo,
-      method: 'get',
-    }).then((res) => {
-      setMerchantInfo(res);
-    });
   }, []);
 
   const handleOrder = () => {
@@ -54,28 +56,58 @@ function Index() {
     Taro.navigateTo({ url: '/pages/order/index' });
   };
 
+  const handleGetUserPhone = (e) => {
+    request({
+      url: APIPATH.passport,
+      method: 'post',
+      header: {
+        Authorization: 'Bearer ' + userToken,
+      },
+      data: {
+        provider: 'PROVIDER_WECHAT_MINIPROGRAM_PHONE',
+        code: e.detail.code,
+        auto_signup: true,
+      },
+    });
+  };
+
+  const handleClickContainer = () => {
+    if (curEnv !== Taro.ENV_TYPE.WEAPP) return;
+    let isShowGetPhone = Taro.getStorageSync('isShowGetPhone');
+    console.log(isShowGetPhone);
+    if (!isShowGetPhone) {
+      setIsShowGetPhoneModal(true);
+      Taro.setStorage({
+        key: 'isShowGetPhone',
+        data: 1,
+      });
+    } else {
+      setIsShowGetPhoneModal(false);
+    }
+  };
+
   return (
-    <View className='index'>
-      <View className='index-bg' style={{ height: isNeedExtend ? Taro.pxTransform(200) : '' }}>
+    <View className={isNeedExtend ? 'index isExtend' : 'index'} onClick={handleClickContainer}>
+      <View className='index-bg'>
         <View className='bg-info'>
-          <View className='avatar'></View>
+          <Image className='avatar' src={require('./assets/cart-empty.png')}></Image>
           <View className='info' onClick={() => setShowBottomRound(true)}>
             <View>
               <Text className='text fs-38'>{merchantInfo.title}</Text>
             </View>
-            <View>
-              <Text className='text fs-30'>{merchantInfo.slogan}</Text>
-            </View>
+            {!isNeedExtend && (
+              <View>
+                <Text className='text fs-30'>{merchantInfo.slogan}</Text>
+              </View>
+            )}
           </View>
         </View>
         <View>
-          <View className='tip'>
-            <Text>{messages.welcome}</Text>
-            {/* <Text>加老板微信成为会员，享优惠</Text>
-            <View className="btn">
-              <Text>成为会员</Text>
-            </View> */}
-          </View>
+          {!isNeedExtend && (
+            <View className='tip'>
+              <Text>{messages.welcome}</Text>
+            </View>
+          )}
         </View>
       </View>
       <Menu setIsNeedExtend={setIsNeedExtend} isNeedExtend={isNeedExtend}></Menu>
@@ -131,6 +163,11 @@ function Index() {
           </View>
         </View>
       </AtFloatLayout>
+      <AtModal isOpened={isShowGetPhoneModal}>
+        <Button openType='getPhoneNumber' onGetPhoneNumber={handleGetUserPhone}>
+          获取手机号
+        </Button>
+      </AtModal>
     </View>
   );
 }

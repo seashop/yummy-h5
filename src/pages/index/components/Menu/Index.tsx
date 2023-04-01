@@ -116,14 +116,6 @@ function Menu(props) {
       date: '2023-1-6 11:48',
     },
   ];
-  // 点击左侧菜单
-  function handleLeftMenuClick(type: number) {
-    // hack 修改scrollTop 同时触发了scroll事件
-    setTimeout(() => {
-      setLeftCur(type);
-    }, 20);
-    // rightMenu.current.scrollTop = goodsBoxOffsetHeightArr.current[type];
-  }
 
   function handleCountChange(value, good) {
     dispatch({ type: 'CART_LIST_CHANGE', data: { value, good } });
@@ -210,15 +202,6 @@ function Menu(props) {
                             <View className='amount-count'>
                               <Text className='good-amnout'>{good.price.toFixed(2)}</Text>
                               <InputNumber min={0} max={99} onChange={(value) => handleCountChange(value, good)}></InputNumber>
-                              {/* <AtInputNumber
-                                className="good-count"
-                                min={0}
-                                disabledInput
-                                value={0}
-                                onChange={(value) =>
-                                  handleCountChange(value, good)
-                                }
-                              ></AtInputNumber> */}
                             </View>
                           </View>
                         </View>

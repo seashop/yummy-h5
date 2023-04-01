@@ -19,7 +19,21 @@
   .fs-30 {
     font-size: 30px;
   }
+  &.isExtend {
+    .index-bg {
+      height: 100px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      .bg-info {
+        .avatar {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
+  }
   .index-bg {
+    position: relative;
     box-sizing: border-box;
     height: 500px;
     background: #171612;
@@ -29,10 +43,11 @@
     .bg-info {
       display: flex;
       flex-direction: row;
+      align-items: center;
       .avatar {
         width: 120px;
         height: 120px;
-        background: #FFFFFF;
+        background: #ffffff;
         border-radius: 50%;
       }
       .info {
@@ -51,7 +66,7 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      color: #F4DC9A;
+      color: #f4dc9a;
       font-style: normal;
       font-weight: 500;
       font-size: 27px;
@@ -61,13 +76,17 @@
         // position: absolute;
         width: 135px;
         height: 50px;
-        background: #F4DC9A;
+        background: #f4dc9a;
         border-radius: 7px;
         color: #816830;
         display: flex;
         justify-content: center;
         align-items: center;
       }
+    }
+    .pay-icon {
+      // position: absolute;
+      // right: 0;
     }
   }
   .index-bottom {
@@ -97,7 +116,7 @@
         position: absolute;
         left: 90px;
         top: 0;
-        background: #FF0202;
+        background: #ff0202;
         height: 38px;
         width: 38px;
         border-radius: 50%;
@@ -113,44 +132,46 @@
       justify-content: center;
       width: 207px;
       height: 78px;
-      background: #F24822;
+      background: #f24822;
       border-radius: 15px;
-      font-family: 'Nunito';
       font-style: normal;
       font-weight: 700;
       font-size: 36px;
       color: #fff;
     }
   }
-  .bottom-popup {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .avatar {
-      margin-bottom: 26px;
-    }
-    .name {
-      font-size: 38px;
-      margin-bottom: 10px;
-    }
-    .desc {
-      font-size: 30px;
-      color: #818181;
-    }
-    .at-divider {
-      color: #ECECEC;
-      height: 55px;
-      width: 90%;
-    }
-    .content {
-      .nut-icon {
-        margin-right: 42px;
-      }
+  .at-float-layout__container {
+    min-height: unset;
+    .bottom-popup {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      font-size: 30px;
+      .avatar {
+        margin-bottom: 26px;
+      }
+      .name {
+        font-size: 38px;
+        margin-bottom: 10px;
+      }
+      .desc {
+        font-size: 30px;
+        color: #818181;
+      }
+      .at-divider {
+        color: #ececec;
+        height: 55px;
+        width: 90%;
+      }
+      .content {
+        .nut-icon {
+          margin-right: 42px;
+        }
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 30px;
+      }
     }
   }
 }
