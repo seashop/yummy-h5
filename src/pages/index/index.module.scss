@@ -61,6 +61,7 @@
       height: 100px;
       margin-top: 83px;
       background: #323232;
+      background-size: cover;
       border-radius: 15px;
       display: flex;
       flex-direction: row;
@@ -72,6 +73,13 @@
       font-size: 27px;
       padding: 25px 37px;
       box-sizing: border-box;
+      &.vip {
+        background-image: url('./assets//indexCard.png');
+        color: #8d7742;
+      }
+      .image {
+        margin-right: 16px;
+      }
       .btn {
         // position: absolute;
         width: 135px;

@@ -15,6 +15,7 @@ const curEnv = Taro.getEnv();
 function Index() {
   const [showBottomRound, setShowBottomRound] = useState(false);
   const cartList = useSelector((state) => state.cart.cartList);
+  const [isVip, setIsVip] = useState(false);
   const allAmount = useSelector((state) => state.cart.allAmount);
   const [merchantInfo, setMerchantInfo] = useState<any>({});
   const [isNeedExtend, setIsNeedExtend] = useState<number>(0);
@@ -86,11 +87,15 @@ function Index() {
     }
   };
 
+  const goToBeVip = () => {
+    Taro.navigateTo({ url: '/pages/membershipDetails/index' });
+  };
+
   return (
     <View className={isNeedExtend ? 'index isExtend' : 'index'} onClick={handleClickContainer}>
       <View className='index-bg'>
         <View className='bg-info'>
-          <Image className='avatar' src={require('./assets/cart-empty.png')}></Image>
+          <Image className='avatar' src={APIPATH.getImgUrl.replace('{id}', merchantInfo.logoId)}></Image>
           <View className='info' onClick={() => setShowBottomRound(true)}>
             <View>
               <Text className='text fs-38'>{merchantInfo.title}</Text>
@@ -104,8 +109,25 @@ function Index() {
         </View>
         <View>
           {!isNeedExtend && (
-            <View className='tip'>
-              <Text>{messages.welcome}</Text>
+            <View className={isVip ? 'tip vip' : 'tip'}>
+              <View>
+                <Image
+                  className='image'
+                  style={{
+                    width: Taro.pxTransform(28),
+                    height: Taro.pxTransform(22),
+                  }}
+                  src={require('./assets/icon.png')}
+                ></Image>
+
+                {/* <Text>{messages.welcome}</Text> */}
+                <Text>{isVip ? '已是本店会员，可消费享抹零优惠' : '加老板微信成为会员，享优惠'}</Text>
+              </View>
+              {!isVip ? (
+                <View className='btn' onClick={goToBeVip}>
+                  成为会员
+                </View>
+              ) : null}
             </View>
           )}
         </View>
@@ -143,7 +165,7 @@ function Index() {
               width: Taro.pxTransform(120),
               height: Taro.pxTransform(120),
             }}
-            src={require('./assets/cart.png')}
+            src={APIPATH.getImgUrl.replace('{id}', merchantInfo.logoId)}
           ></Image>
           <Text className='name'>{merchantInfo.title}</Text>
           <Text className='desc'>{merchantInfo.slogan}</Text>

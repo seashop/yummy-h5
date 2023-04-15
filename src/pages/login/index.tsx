@@ -12,7 +12,10 @@ import enIcon from './assets/en.jpg';
 import cnIcon from './assets/cn.jpg';
 import useSetToken from '../../hooks/useSetToken';
 import LanguageContext from '../../context/language-context';
+import CnAgreement from '../../constants/cn-agreement';
+import EnAgreement from '../../constants/en-agreement';
 export default function index() {
+  const enStatement = '';
   const [mail, setMail] = useState('');
   const [captchaInfo, setCaptchaInfo] = useState({
     captchaId: '',
@@ -26,7 +29,7 @@ export default function index() {
   const [isOpenPolicy, setIsOpenPolicy] = useState(false);
   const [isShowSelectLanuage, setIsShowSelectLanuage] = useState(false);
   const { data, loginFn: skipLoginFn } = useSetToken();
-  const { messages, setLanguage } = useContext(LanguageContext);
+  const { messages, language, setLanguage } = useContext(LanguageContext);
   const dispatch = useDispatch();
   const pageFrom = getCurrentInstance().router.params.from;
   const handleMailChange = (value) => {
@@ -100,6 +103,9 @@ export default function index() {
 
   const handleSkipLogin = () => {
     skipLoginFn('PROVIDER_ANONYMOUS', '', '', 1);
+    Taro.removeStorage({
+      key: 'login-email',
+    });
   };
   const handleChecked = () => {
     setChecked(!checked);
@@ -211,9 +217,7 @@ export default function index() {
       </View>
       <AtToast isOpened={isOpenModal} text={errorText} onClose={() => setIsOpenModal(false)}></AtToast>
       <AtFloatLayout isOpened={isOpenPolicy} onClose={() => setIsOpenPolicy(false)}>
-        <View>
-          <View></View>
-        </View>
+        {language === 'cn' ? <CnAgreement /> :  <EnAgreement />}
       </AtFloatLayout>
     </View>
   );

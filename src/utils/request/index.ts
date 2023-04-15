@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro';
 import {
   baseUrl,
 } from './config';
-
+import refreshToken from '../refreshToken';
 const request_data = {
 
 };
@@ -42,9 +42,14 @@ export default (options:options) => {
       // }
       resolve(data);
     } else {
+      // if (data.code === 2) {
+      //   refreshToken()
+      //   return
+      // }
       reject(data)
     }
   }).catch((err) => {
+
     return err
   })
   })

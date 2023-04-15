@@ -1,0 +1,52 @@
+.membership-detail-container {
+  .member-card {
+    width: 690px;
+    height: 314px;
+    margin: 170px auto;
+    padding: 37px 32px;
+    background-image: url('./assets/card.png');
+    background-size: cover;
+    .text {
+      margin-left: 16px;
+      font-weight: 500;
+      font-size: 28px;
+      line-height: 154.4%;
+      color: #8d7742;
+    }
+    .header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 42px;
+    }
+    .content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  .mebership-content {
+    margin: 50px 30px 0;
+    .text {
+      margin-bottom: 14px;
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 154.4%;
+      color: #878787;
+    }
+    .list {
+      padding: 72px 36px;
+      background: #ffffff;
+      box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.02);
+      border-radius: 14px;
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 154.4%;
+      color: #000;
+    }
+  }
+  .layout-body {
+    text-align: center;
+    padding: 200px 100px;
+  }
+}
