@@ -6,7 +6,7 @@ import { AtTabs, AtTabsPane } from 'taro-ui';
 import Taro from '@tarojs/taro';
 import InputNumber from './components/input-number/index';
 import request from '../../../../utils/request';
-import APIPATH from '../../../../utils/request/config';
+import {APIPATH} from '../../../../utils/request/config';
 import LanguageContext from '../../../../context/language-context';
 import './index.module.scss';
 function Menu(props) {

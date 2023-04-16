@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro';
 import { View, Text, Image, Input } from '@tarojs/components';
 import { useSelector } from 'react-redux';
 import LanguageContext from '../../../../context/language-context';
-import APIPATH from '../../../../utils/request/config';
+import {APIPATH} from '../../../../utils/request/config';
 import './index.module.scss';
 export default function index() {
   const cartList = useSelector((state) => state.cart.cartList);

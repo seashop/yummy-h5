@@ -8,7 +8,7 @@ import './index.module.scss';
 import Taro from '@tarojs/taro';
 import Menu from './components/Menu/Index';
 import request from '../../utils/request/index';
-import APIPATH from '../../utils/request/config';
+import {APIPATH} from '../../utils/request/config';
 import useSetToken from '../../hooks/useSetToken';
 import LanguageContext from '../../context/language-context';
 const curEnv = Taro.getEnv();

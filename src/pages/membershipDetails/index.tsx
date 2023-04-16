@@ -5,7 +5,7 @@ import { View, Text } from '@tarojs/components';
 import { Image } from '@tarojs/components';
 import Taro, { getCurrentInstance } from '@tarojs/taro';
 import request from '../../utils/request';
-import APIPATH from '../../utils/request/config';
+import {APIPATH} from '../../utils/request/config';
 import LanguageContext from '../../context/language-context';
 import './index.module.scss';
 export default function index() {

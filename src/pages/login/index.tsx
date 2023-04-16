@@ -5,7 +5,7 @@ import Taro, { getCurrentInstance } from '@tarojs/taro';
 import { useSelector, useDispatch } from 'react-redux';
 import CountDown from './components/count-down/index';
 import request from '../../utils/request';
-import APIPATH from '../../utils/request/config';
+import {APIPATH} from '../../utils/request/config';
 import './index.module.scss';
 import loginBg from './assets/login-bg.png';
 import enIcon from './assets/en.jpg';

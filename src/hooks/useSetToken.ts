@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import request from '../utils/request/index';
-import APIPATH from '../utils/request//config';
+import {APIPATH} from '../utils/request//config';
 
 
 const currentPage = Taro.getCurrentPages().pop();

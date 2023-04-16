@@ -42,10 +42,10 @@ export default (options:options) => {
       // }
       resolve(data);
     } else {
-      // if (data.code === 2) {
-      //   refreshToken()
-      //   return
-      // }
+      if (data.code === 2) {
+        refreshToken()
+        return
+      }
       reject(data)
     }
   }).catch((err) => {

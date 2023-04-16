@@ -1,5 +1,5 @@
 import request from './request/index';
-import APIPATH from './request/config';
+import {APIPATH} from './request/config';
 import Taro from '@tarojs/taro';
 export default function setToken(type, wxCode, customToken) {
   return new Promise((resolve, reject) => {

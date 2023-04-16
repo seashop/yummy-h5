@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { View, Text } from '@tarojs/components';
 import OrderInfo from './components/OrderInfo/index';
 import request from '../../utils/request';
-import APIPATH from '../../utils/request/config';
+import {APIPATH} from '../../utils/request/config';
 import useUserToken from '../../hooks/useUserToken';
 import LanguageContext from '../../context/language-context';
 import './index.module.scss';
