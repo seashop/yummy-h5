@@ -1,5 +1,5 @@
 // 请求连接前缀
-export const baseUrl = 'https://dev-ygo.fly.dev/';
+export const baseUrl = '/';
 
 
 export const APIPATH = {
